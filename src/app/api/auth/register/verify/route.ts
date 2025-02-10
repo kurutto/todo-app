@@ -53,7 +53,8 @@ export async function GET(req:Request, res:NextResponse) {
     //   maxAge: 60 * 60 * 24, // 24時間
     // });
     
-    return NextResponse.json({ message: "認証が完了しました" }, { status: 200 });
+    // return NextResponse.json({ message: "認証が完了しました" }, { status: 200 });
+    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_BASE_URL}/todos`);
   } catch (error) {
     return NextResponse.json({ message: "無効または期限切れのトークン",error }, { status: 400 });
   }

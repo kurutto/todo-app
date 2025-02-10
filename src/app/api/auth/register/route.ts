@@ -45,6 +45,7 @@ export async function POST(req:Request, res:Response) {
       subject: "メールアドレスの認証",
       text: `以下のリンクをクリックして認証を完了してください:\n\n ${verificationUrl}`,
     });
+
     return NextResponse.json({ message: "確認メールを送信しました" }, { status: 200 });
 }catch(err){
   return NextResponse.json({ message: "サーバーエラー" }, { status: 500 });

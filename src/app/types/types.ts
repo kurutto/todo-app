@@ -2,7 +2,8 @@ export interface UserType{
   id : string;
   name ?: string | null | undefined;
   email ?: string | null | undefined;
-  image ?: string | null | undefined
+  image ?: string | null | undefined;
+  emailVerified ?:Date
 }
 export interface TodoType{
   id:number

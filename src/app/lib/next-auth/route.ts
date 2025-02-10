@@ -7,6 +7,9 @@ import prisma from "../prisma";
 export const nextAuthOptions: NextAuthOptions = {
   debug: false,
   secret: process.env.SECRET,
+  session: {
+    strategy: 'jwt',
+  },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -16,7 +19,7 @@ export const nextAuthOptions: NextAuthOptions = {
       // The name to display on the sign in form (e.g. 'Sign in with...')
       name: "Credentials",
       credentials: {
-        email: { label: "Mail", type: "email", placeholder: "jsmith" },
+        email: { label: "Mail", type: "email" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
@@ -27,12 +30,9 @@ export const nextAuthOptions: NextAuthOptions = {
           headers: { "Content-Type": "application/json" },
         });
         const user = await res.json();
-        console.log('userは送られました。',user)
-        console.log('userは送られました。',res)
 
         // If no error and we have user data, return it
         if (res.ok && user) {
-          console.log('OKになりました')
           return user;
         }
         // Return null if user data could not be retrieved
@@ -46,14 +46,24 @@ export const nextAuthOptions: NextAuthOptions = {
   ],
   adapter: PrismaAdapter(prisma),
   callbacks: {
-    session: ({ session, user }) => {
-      return {
-        ...session,
-        user: {
-          ...session.user,
-          id: user.id,
-        },
-      };
+    async jwt({ token, trigger, user, account }) {
+      if (user) {
+        token.sub = user.id;
+        token.emailVerified = user.emailVerified ? user.emailVerified : null;
+      }
+      if (account) {
+        const dbUser = await prisma.user.findUnique({ where: { id: token.sub as string } });
+        if (dbUser) {
+          token.emailVerified = dbUser.emailVerified;
+        }
+      }
+      return token;
+    },
+    session: ({ session, token }) => {
+      if(!session.user) return session
+      session.user.id = token.sub ? token.sub : '';
+      session.user.emailVerified = token.emailVerified as Date | null;
+      return session;
     },
   },
 };
