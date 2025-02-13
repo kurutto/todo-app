@@ -50,6 +50,8 @@ export const nextAuthOptions: NextAuthOptions = {
 
       if (user) {
         token.sub = user.id;
+        token.name = user.name;
+        token.email = user.email;
         token.emailVerified = user.emailVerified ? user.emailVerified : null;
         token.jat = Math.floor(Date.now() / 1000);
         await prisma.user.update({ where: { id: token.sub as string },data:{lastLogin:new Date(token.jat as number * 1000) } });
@@ -59,13 +61,14 @@ export const nextAuthOptions: NextAuthOptions = {
         if (dbUser) {
           token.emailVerified = dbUser.emailVerified;
         }
-        token.jat = Math.floor(Date.now() / 1000);
       }
       return token;
     },
     session: ({ session, token }) => {
       if(!session.user) return session
       session.user.id = token.sub ? token.sub : '';
+      session.user.name = token.name;
+      session.user.email = token.email;
       session.user.emailVerified = token.emailVerified as Date | null;
       session.user.lastLogin = new Date(token.jat as number * 1000);
       return session;

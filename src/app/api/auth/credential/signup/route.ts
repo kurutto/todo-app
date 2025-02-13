@@ -3,20 +3,27 @@ import { NextResponse } from "next/server";
 import bcrypt from 'bcryptjs';
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer"
+import { createId } from '@paralleldrive/cuid2';
 
 export async function POST(req:Request, res:Response) {
   try{
-    const { id, name, email, password } = await req.json();
+    const { userId, name, email, password } = await req.json();
+    console.log('これはuserid:',userId)
+    console.log('これはname:',name)
+    console.log('これはemail:',email)
+    console.log('これはpassword:',password)
 
-    const checkId = await prisma.credential.findFirst({
+    const checkId = await prisma.user.findFirst({
       where:{
-        id:id
+        id:userId
       }
     });
     if(checkId){
+      console.log()
       return NextResponse.json({ message: "このIDは既に登録されています",
         errorId: "INVALID_ID" }, { status: 400 });
     }
+    console.log('IDの重複はなかったよ')
     const checkEmail = await prisma.user.findFirst({
       where:{
         email:email
@@ -27,16 +34,23 @@ export async function POST(req:Request, res:Response) {
         errorId: "INVALID_EMAIL"}, { status: 400 });
     }
 
+    console.log('Emailの重複はなかったよ')
+    const id = createId();
+    console.log('これはid:',id)
     const hashedPassword = await bcrypt.hash(password, 10);
+
+    console.log('これはhashedPassword:',hashedPassword)
 
     await prisma.credential.create({
       data:{
         id:id,
         passwordHash:hashedPassword,
-        verified: false
+        verified: false,
       }
     })
-    const paylodad = {id,name,email}
+    console.log('credentialへの追加は終わったよ')
+
+    const paylodad = {id,userId,name,email}
     const token = jwt.sign(paylodad,process.env.JWT_SECRET!, { expiresIn: "1h" });
 
     const transporter = nodemailer.createTransport({
@@ -60,7 +74,6 @@ export async function POST(req:Request, res:Response) {
 
     return NextResponse.json({ message: "確認メールを送信しました" }, { status: 200 });
 }catch(err){
-  return NextResponse.json({ message: "サーバーエラー" }, { status: 500 });
-
+  return NextResponse.json({ message: "サーバーエラー", err }, { status: 500 });
 }
 }

@@ -11,9 +11,9 @@ export async function GET(req:Request, res:NextResponse) {
     }
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as jwt.JwtPayload;
     const id = decoded.id;
+    const userId = decoded.userId
     const name = decoded.name;
     const email = decoded.email;
-    const userId = createId();
 
     // usersテーブルにアカウントを追加
     await prisma.user.create({

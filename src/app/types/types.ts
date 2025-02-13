@@ -14,3 +14,9 @@ export interface TodoType{
   createdAt:Date
   userId : string
 }
+export interface AccountType{
+  id:string;
+  userId:string;
+  type:string;
+  provider:string;
+}

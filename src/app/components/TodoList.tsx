@@ -121,12 +121,6 @@ const TodoList = ({ todos }: TodoListProps) => {
       <ul>
         {todoList.map((todo: TodoType) => (
           <TodoListItem key={todo.id} todo={todo} statusList={statusList} />
-          // <li key={todo.id}>
-          //   <Link href={`/todos/${todo.id}`}>
-          //     {todo.title}:{statusList[todo.status]}(作成日：
-          //     {new Date(todo.createdAt).toLocaleDateString()})
-          //   </Link>
-          // </li>
         ))}
       </ul>
     </div>

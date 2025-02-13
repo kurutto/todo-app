@@ -7,20 +7,20 @@ export async function POST(req:Request, res:Response) {
   const { id, password } = await req.json();
   const existingUser = await prisma.credential.findFirst({
     where:{
-      id:id,
+      userId:id,
     }
   });
   if(!existingUser){
     return NextResponse.json({ message: "このIDは登録されていません"}, { status: 400 });
-
   }
+
   const hashedPassword = await existingUser.passwordHash;
   const isMatch = await bcrypt.compare(password, hashedPassword);
 
   if(isMatch){
     const user = await prisma.user.findFirst({
       where:{
-        id:existingUser.userId!,
+        id:id,
       }
     })
     return NextResponse.json(user, { status: 201 });

@@ -1,11 +1,12 @@
 import { getServerSession } from 'next-auth';
 import React from 'react'
 import { nextAuthOptions } from '../lib/next-auth/route';
-import { UserType } from '../types/types';
+import { AccountType, UserType } from '../types/types';
 import { redirect } from 'next/navigation';
 import { fetchTodos } from '../lib/fetchTodos';
 import TodoListItem from '../components/TodoListItem';
 import { statusList } from '../data/todos/status';
+import UserData from '../components/UserData';
 
 const Mypage = async() => {
     const session = await getServerSession(nextAuthOptions);
@@ -17,12 +18,7 @@ const Mypage = async() => {
   return (
     <div>
       <h2>ユーザー情報</h2>
-      <div>ユーザーID</div>
-      <div>{user.email}</div>
-      <div>ユーザー名</div>
-      <div>{user.name}</div>
-      <div>最終ログイン日</div>
-      <div>{ user.lastLogin?.toLocaleDateString()}</div>
+      <UserData user={user} />
       <h2>TODO</h2>
       <ul>
         {(await todos).map(todo => (

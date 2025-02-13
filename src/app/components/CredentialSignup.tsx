@@ -21,7 +21,7 @@ const CredentialSignup = () => {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/credential/signup`, {
           method: "POST",
           body: JSON.stringify({
-            id:idRef.current!.value,
+            userId:idRef.current!.value,
             name: nameRef.current!.value,
             email: emailRef.current!.value,
             password: passRef.current!.value,
@@ -43,6 +43,7 @@ const CredentialSignup = () => {
       }catch(err){
         if (err instanceof Error) {
           setErrorMessage(err.message);
+          console.log(err);
         } else {
           setErrorMessage("不明なエラーが発生しました");
         }
@@ -57,7 +58,7 @@ const CredentialSignup = () => {
         {idAlert && <p>{idAlert}</p>}
         <label>ユーザー名</label>
         <input type="text" ref={nameRef} />
-        <label>ID（メールアドレス）</label>
+        <label>メールアドレス</label>
         <input type="email" ref={emailRef} />
         {emailAlert && <p>{emailAlert}</p>}
         <label>password</label>
