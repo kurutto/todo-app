@@ -49,6 +49,7 @@ model User {
   email         String?   @unique
   emailVerified DateTime? @map("email_verified")
   image         String?
+  lastLogin     DateTime? @map("last_login")
   accounts      Account[]
   sessions      Session[]
   todos Todo[]
@@ -59,12 +60,11 @@ model User {
 
 model Credential{
   id String @id @default(cuid())
-  email String @unique
-  password_hash String
+  passwordHash String @map("password_hash")
   verified Boolean @default(false)
-  createdAt DateTime @default(now())
+  createdAt DateTime @default(now()) @map("created_at")
   user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String? @unique
+  userId String? @unique @map("user_id")
  
   @@map("credentials")
 }
@@ -73,7 +73,7 @@ model Todo{
   title String
   content String
   status Int
-  createdAt DateTime @default(now())
+  createdAt DateTime @default(now()) @map("created_at")
   user User? @relation(fields: [userId], references:[id], onDelete: Cascade)
   userId String
   @@map("todos")

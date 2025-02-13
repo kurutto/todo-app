@@ -19,12 +19,12 @@ export const nextAuthOptions: NextAuthOptions = {
       // The name to display on the sign in form (e.g. 'Sign in with...')
       name: "Credentials",
       credentials: {
-        email: { label: "Mail", type: "email" },
+        id: { label: "ID", type: "text" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
         // 入力された値をUserのデータベースと比較するapiを作る
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/credential`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/credential/signin`, {
           method: "POST",
           body: JSON.stringify(credentials),
           headers: { "Content-Type": "application/json" },
@@ -47,15 +47,19 @@ export const nextAuthOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   callbacks: {
     async jwt({ token, trigger, user, account }) {
+
       if (user) {
         token.sub = user.id;
         token.emailVerified = user.emailVerified ? user.emailVerified : null;
+        token.jat = Math.floor(Date.now() / 1000);
+        await prisma.user.update({ where: { id: token.sub as string },data:{lastLogin:new Date(token.jat as number * 1000) } });
       }
       if (account) {
         const dbUser = await prisma.user.findUnique({ where: { id: token.sub as string } });
         if (dbUser) {
           token.emailVerified = dbUser.emailVerified;
         }
+        token.jat = Math.floor(Date.now() / 1000);
       }
       return token;
     },
@@ -63,6 +67,7 @@ export const nextAuthOptions: NextAuthOptions = {
       if(!session.user) return session
       session.user.id = token.sub ? token.sub : '';
       session.user.emailVerified = token.emailVerified as Date | null;
+      session.user.lastLogin = new Date(token.jat as number * 1000);
       return session;
     },
   },

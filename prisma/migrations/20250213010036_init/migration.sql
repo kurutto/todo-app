@@ -33,6 +33,7 @@ CREATE TABLE "users" (
     "email" TEXT,
     "email_verified" TIMESTAMP(3),
     "image" TEXT,
+    "last_login" TIMESTAMP(3),
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
@@ -40,11 +41,10 @@ CREATE TABLE "users" (
 -- CreateTable
 CREATE TABLE "credentials" (
     "id" TEXT NOT NULL,
-    "email" TEXT,
     "password_hash" TEXT NOT NULL,
     "verified" BOOLEAN NOT NULL DEFAULT false,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "userId" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "userId" TEXT,
 
     CONSTRAINT "credentials_pkey" PRIMARY KEY ("id")
 );
@@ -55,7 +55,7 @@ CREATE TABLE "todos" (
     "title" TEXT NOT NULL,
     "content" TEXT NOT NULL,
     "status" INTEGER NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "userId" TEXT NOT NULL,
 
     CONSTRAINT "todos_pkey" PRIMARY KEY ("id")
@@ -76,9 +76,6 @@ CREATE UNIQUE INDEX "sessions_session_token_key" ON "sessions"("session_token");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
-
--- CreateIndex
-CREATE UNIQUE INDEX "credentials_email_key" ON "credentials"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "credentials_userId_key" ON "credentials"("userId");

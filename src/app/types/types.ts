@@ -4,6 +4,7 @@ export interface UserType{
   email ?: string | null | undefined;
   image ?: string | null | undefined;
   emailVerified ?:Date
+  lastLogin ?: Date
 }
 export interface TodoType{
   id:number

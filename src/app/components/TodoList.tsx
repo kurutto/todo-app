@@ -1,7 +1,8 @@
 "use client";
 import React, { useMemo, useRef, useState } from "react";
 import { TodoType } from "../types/types";
-import Link from "next/link";
+import { statusList } from "../data/todos/status";
+import TodoListItem from "./TodoListItem";
 interface TodoListProps {
   todos: TodoType[];
 }
@@ -9,7 +10,6 @@ const TodoList = ({ todos }: TodoListProps) => {
   const [filter, setFilter] = useState<number[]>([]);
   const [todoList, setTodoList] = useState(todos);
   const filterTextRef = useRef<HTMLInputElement>(null);
-  const statusList = ["未完了", "途中", "完了"];
   const listItemRefs = useRef<{
     [key in number]: HTMLInputElement;
   }>({});
@@ -120,12 +120,13 @@ const TodoList = ({ todos }: TodoListProps) => {
       <button onClick={handleSortDescending}>降順にソート</button>
       <ul>
         {todoList.map((todo: TodoType) => (
-          <li key={todo.id}>
-            <Link href={`/todos/${todo.id}`}>
-              {todo.title}:{statusList[todo.status]}(作成日：
-              {new Date(todo.createdAt).toLocaleDateString()})
-            </Link>
-          </li>
+          <TodoListItem key={todo.id} todo={todo} statusList={statusList} />
+          // <li key={todo.id}>
+          //   <Link href={`/todos/${todo.id}`}>
+          //     {todo.title}:{statusList[todo.status]}(作成日：
+          //     {new Date(todo.createdAt).toLocaleDateString()})
+          //   </Link>
+          // </li>
         ))}
       </ul>
     </div>

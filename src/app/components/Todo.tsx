@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import { TodoType } from '../types/types';
 import { useRouter } from 'next/navigation';
+import { statusList } from '../data/todos/status';
 
 interface TodoProps {
   userId:string;
@@ -14,45 +15,37 @@ const Todo = ({userId, todo, id}:TodoProps) => {
   const [content, setContent] = useState(todo.content);
   const [status, setStatus] = useState(todo.status);
   const [isEdit, setIsEdit] = useState(false);
-  const statusList = ['未完了','途中','完了'];
   const handleEdit = () => {
     setIsEdit(true);
   };
-  const handleSet = () => {
+  const handleSet = async () => {
     setIsEdit(false);
-    const updateTodo = async () => {
-      await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/todos/${userId}/${id}`,
-        {
-          method: "PUT",
-          body: JSON.stringify({
-            title: title,
-            content: content,
-            status: status,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-    };
-    updateTodo();
+    await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/todos/${userId}/${id}`,
+      {
+        method: "PUT",
+        body: JSON.stringify({
+          title: title,
+          content: content,
+          status: status,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
   };
-  const handleDelete = () => {
-    const deleteTodo = async () => {
-      await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/todos/${userId}/${id}`,
-        {
-          method: "DELETE",
-        }
-      );
-    };
-    deleteTodo();
+  const handleDelete = async () => {
+    await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/todos/${userId}/${id}`,
+      {
+        method: "DELETE",
+      }
+    );
     router.push("/todos");
     router.refresh();
   };
   return (
-    
     <div>
       <div>
         {isEdit ? (
@@ -62,7 +55,7 @@ const Todo = ({userId, todo, id}:TodoProps) => {
             onChange={(e) => setTitle(e.target.value)}
           />
         ) : (
-          title
+          todo.title
         )}
       </div>
       <div>
@@ -72,18 +65,18 @@ const Todo = ({userId, todo, id}:TodoProps) => {
             onChange={(e) => setContent(e.target.value)}
           ></textarea>
         ) : (
-          content
+          todo.content
         )}
       </div>
       <div>
         {isEdit ? (
-          <select onChange={(e) => setStatus(Number(e.target.value))}>
+          <select value={status} onChange={(e) => setStatus(Number(e.target.value))}>
             {statusList.map((status,idx) => (
               <option key={idx} value={idx}>{status}</option>
             ))}
           </select>
         ) : (
-          statusList[status]
+          statusList[todo.status]
         )}
       </div>
       {isEdit ? (

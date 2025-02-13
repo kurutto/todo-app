@@ -6,26 +6,38 @@ import nodemailer from "nodemailer"
 
 export async function POST(req:Request, res:Response) {
   try{
-    const { email, password } = await req.json();
+    const { id, name, email, password } = await req.json();
 
-    const existingUser = await prisma.credential.findFirst({
+    const checkId = await prisma.credential.findFirst({
+      where:{
+        id:id
+      }
+    });
+    if(checkId){
+      return NextResponse.json({ message: "このIDは既に登録されています",
+        errorId: "INVALID_ID" }, { status: 400 });
+    }
+    const checkEmail = await prisma.user.findFirst({
       where:{
         email:email
       }
     });
-    if(existingUser){
-      return NextResponse.json({ message: "このメールアドレスは既に登録されています"}, { status: 400 });
+    if(checkEmail){
+      return NextResponse.json({ message: "このメールアドレスは既に登録されています",
+        errorId: "INVALID_EMAIL"}, { status: 400 });
     }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     await prisma.credential.create({
       data:{
-        email:email,
-        password_hash:hashedPassword,
+        id:id,
+        passwordHash:hashedPassword,
         verified: false
       }
     })
-    const token = jwt.sign({ email },process.env.JWT_SECRET!, { expiresIn: "1h" });
+    const paylodad = {id,name,email}
+    const token = jwt.sign(paylodad,process.env.JWT_SECRET!, { expiresIn: "1h" });
 
     const transporter = nodemailer.createTransport({
       host: process.env.EMAIL_HOST!, 
@@ -37,7 +49,7 @@ export async function POST(req:Request, res:Response) {
       }
     } as nodemailer.TransportOptions);
 
-    const verificationUrl = `${process.env.NEXT_PUBLIC_API_URL}/auth/register/verify?token=${token}`;
+    const verificationUrl = `${process.env.NEXT_PUBLIC_API_URL}/auth/credential/signup/verify?token=${token}`;
 
     await transporter.sendMail({
       from: process.env.EMAIL_USER,

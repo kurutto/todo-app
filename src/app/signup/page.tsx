@@ -1,32 +1,22 @@
-'use client'
-import React, { FormEvent, useRef } from "react";
+import { getServerSession } from "next-auth";
+import { nextAuthOptions } from "../lib/next-auth/route";
+import { redirect } from "next/navigation";
+import OauthSignin from "../components/OauthSignin";
+import CredentialSignup from "../components/CredentialSignup";
 
-const page = () => {
-  const emailRef = useRef<HTMLInputElement>(null);
-  const passRef = useRef<HTMLInputElement>(null);
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
-      method: "POST",
-      body: JSON.stringify({
-        email: emailRef.current!.value,
-        password: passRef.current!.value,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-  };
+const Signup = async () => {
+  const session = await getServerSession(nextAuthOptions);
+  if(session){
+    redirect('/todos');
+  }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>mail</label>
-      <input type="email" ref={emailRef} />
-      <label>password</label>
-      <input type="text" ref={passRef} />
-      <button type="submit">送信</button>
-    </form>
+    <div>
+      <h2>新規登録</h2>
+        <OauthSignin />
+        <CredentialSignup />
+    </div>
   );
 };
 
-export default page;
+export default Signup;

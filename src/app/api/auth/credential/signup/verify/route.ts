@@ -1,17 +1,17 @@
 import prisma from "@/app/lib/prisma";
 import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
-import {cookies} from "next/headers"
-import { randomBytes } from "crypto";
 import { createId } from '@paralleldrive/cuid2';
 
 export async function GET(req:Request, res:NextResponse) {
-  const token = await req.url.split('?token=')[1];
-  if (!token){
-    return NextResponse.json({ message: "無効なトークン"}, { status: 400 });
-  }
   try {
+    const token = await req.url.split('?token=')[1];
+    if (!token){
+      return NextResponse.json({ message: "無効なトークン"}, { status: 400 });
+    }
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as jwt.JwtPayload;
+    const id = decoded.id;
+    const name = decoded.name;
     const email = decoded.email;
     const userId = createId();
 
@@ -19,13 +19,15 @@ export async function GET(req:Request, res:NextResponse) {
     await prisma.user.create({
       data:{
         id:userId,
+        name:name,
         email:email
       }
     })
-    // ユーザーを認証済みに変更
+    
+    // ユーザーを認証済みに変更,userIdセット
     await prisma.credential.update({
       where: {
-        email: email,
+        id: id,
       },
       data: {
         userId:userId,
@@ -54,7 +56,7 @@ export async function GET(req:Request, res:NextResponse) {
     // });
     
     // return NextResponse.json({ message: "認証が完了しました" }, { status: 200 });
-    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_BASE_URL}/todos`);
+    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_BASE_URL}/signin`);
   } catch (error) {
     return NextResponse.json({ message: "無効または期限切れのトークン",error }, { status: 400 });
   }

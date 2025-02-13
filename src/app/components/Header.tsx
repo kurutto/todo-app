@@ -10,7 +10,7 @@ const Header = async () => {
   console.log("session情報", session);
   return (
     <div>
-      <Link href={user ? "/api/auth/signout" : "/api/auth/signin"}>
+      <Link href={user ? "/api/auth/signout" : "/login"}>
         {user ? "ログアウト" : "ログイン"}
       </Link>
     </div>
