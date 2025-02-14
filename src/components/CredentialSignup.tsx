@@ -45,11 +45,7 @@ const formSchema = z.object({
 });
 type formType = z.infer<typeof formSchema>;
 
-interface CredentialSignupProps {
-  className?: string;
-}
-
-const CredentialSignup = ({ className }: CredentialSignupProps) => {
+const CredentialSignup = () => {
   const [responseMessage, setResponseMessage] = useState("");
   const {
     register,

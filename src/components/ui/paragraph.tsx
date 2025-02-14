@@ -7,10 +7,10 @@ interface ParagraphProps {
   className ?: string;
 }
 
-const Paragraph = ({variant = 'base', children, className}:ParagraphProps) => {
+const Paragraph = ({variant = 'base', children, className,...props}:ParagraphProps) => {
   const baseStyle = cn(variant === 'base' && 'text-base', variant === 'error' && 'text-sm text-[#dc2626]' )
   return (
-    <p className={cn(baseStyle,className)}>{children}</p>
+    <p className={cn(baseStyle,className)} {...props}>{children}</p>
   )
 }
 
