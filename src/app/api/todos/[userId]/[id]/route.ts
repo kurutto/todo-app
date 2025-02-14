@@ -12,7 +12,6 @@ export async function GET(req:Request){
         id:id
       }
     });
-    console.log('todoは:',todo);
     return NextResponse.json(todo);
   }catch(err){
     return NextResponse.json(err)

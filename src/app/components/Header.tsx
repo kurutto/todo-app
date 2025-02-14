@@ -7,7 +7,6 @@ import { UserType } from "../types/types";
 const Header = async () => {
   const session = await getServerSession(nextAuthOptions);
   const user = session?.user as UserType;
-  console.log("session情報", session);
   return (
     <div>
       <Link href={user ? "/api/auth/signout" : "/signin"}>

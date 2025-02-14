@@ -11,7 +11,6 @@ const OauthSignin = () => {
     const fetchProviders = async() => {
       const res = await getProviders();
       setProviders(res);
-      console.log('プロバイダー：',res)
     }
     fetchProviders();
   },[]);

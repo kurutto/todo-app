@@ -14,17 +14,19 @@ const Mypage = async() => {
       redirect('/login');
     }
     const user = session.user as UserType;
-    const todos = fetchTodos(user.id)
+    const todos = fetchTodos(user.id);
   return (
     <div>
       <h2>ユーザー情報</h2>
       <UserData user={user} />
       <h2>TODO</h2>
-      <ul>
-        {(await todos).map(todo => (
-          <TodoListItem key={todo.id} todo={todo} statusList={statusList} />
-        ))}
-      </ul>
+      {todos ? 
+        <ul>
+          {(await todos).map(todo => (
+            <TodoListItem key={todo.id} todo={todo} statusList={statusList} />
+          ))}
+        </ul>
+      : null}
     </div>
   )
 }
