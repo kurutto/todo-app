@@ -1,6 +1,7 @@
 'use client'
+import { UserType } from "@/types/types";
 import React, { useState } from "react";
-import { UserType } from "../types/types";
+
 
 interface UserDataProps {
   user: UserType;

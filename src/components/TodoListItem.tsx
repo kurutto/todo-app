@@ -1,6 +1,7 @@
 import React from 'react'
-import { TodoType } from '../types/types'
+
 import Link from 'next/link';
+import { TodoType } from '@/types/types';
 
 interface TodoListItemProps {
   todo:TodoType;

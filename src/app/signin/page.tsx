@@ -1,9 +1,10 @@
 import React from 'react'
-import OauthSignin from '../components/OauthSignin'
-import CredentialSignin from '../components/CredentialSignin'
+import OauthSignin from '@/components/OauthSignin';
+import CredentialSignin from '@/components/CredentialSignin';
 import { getServerSession } from 'next-auth';
 import { nextAuthOptions } from '../lib/next-auth/route';
 import { redirect } from 'next/navigation';
+import Heading from '@/components/ui/heading';
 
 const SignIn = async() => {
   const session = await getServerSession(nextAuthOptions);
@@ -12,8 +13,13 @@ const SignIn = async() => {
   }
   return (
     <div>
-      <OauthSignin />
-      <CredentialSignin />
+      <Heading level={1}>ログイン</Heading>
+      <div className="mx-auto max-w-md">
+        <Heading level={2}>既存のアカウントでログイン</Heading>
+        <OauthSignin />
+        <Heading level={2}>IDとパスワードでログイン</Heading>
+        <CredentialSignin />
+      </div>
     </div>
   )
 }
