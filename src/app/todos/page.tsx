@@ -1,10 +1,10 @@
 import React from 'react'
-import { UserType } from '../types/types'
 import { getServerSession } from 'next-auth';
-import { nextAuthOptions } from '../lib/next-auth/route';
 import Link from 'next/link';
-import TodoList from '../components/TodoList';
-import { fetchTodos } from '../lib/fetchTodos';
+import TodoList from '@/components/TodoList';
+import { UserType } from '@/types/types';
+import { nextAuthOptions } from '@/lib/next-auth/route';
+import { fetchTodos } from '@/lib/fetchTodos';
 
 const page = async () => {
   const session = await getServerSession(nextAuthOptions);

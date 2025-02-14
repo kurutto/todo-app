@@ -1,6 +1,6 @@
+import { nextAuthOptions } from "@/lib/next-auth/route";
 import type { Metadata } from "next";
 import { getServerSession } from "next-auth";
-import { nextAuthOptions } from "../lib/next-auth/route";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {

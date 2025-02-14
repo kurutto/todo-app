@@ -4,6 +4,7 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import EmailProvider from "next-auth/providers/email";
 import prisma from "../prisma";
+
 export const nextAuthOptions: NextAuthOptions = {
   debug: false,
   secret: process.env.SECRET,

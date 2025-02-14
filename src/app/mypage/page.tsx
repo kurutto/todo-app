@@ -1,12 +1,12 @@
 import { getServerSession } from "next-auth";
 import React from "react";
-import { nextAuthOptions } from "../lib/next-auth/route";
 import { UserType } from "@/types/types";
 import { redirect } from "next/navigation";
-import { fetchTodos } from "../lib/fetchTodos";
 import TodoListItem from "@/components/TodoListItem";
 import UserData from "@/components/UserData";
 import { statusList } from "@/data/todos/status";
+import { nextAuthOptions } from "@/lib/next-auth/route";
+import { fetchTodos } from "@/lib/fetchTodos";
 
 const Mypage = async () => {
   const session = await getServerSession(nextAuthOptions);

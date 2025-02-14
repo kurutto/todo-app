@@ -1,7 +1,6 @@
-import prisma from "@/app/lib/prisma";
+import prisma from "@/lib/prisma";
 import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
-import { createId } from '@paralleldrive/cuid2';
 
 export async function GET(req:Request, res:NextResponse) {
   try {
@@ -34,28 +33,6 @@ export async function GET(req:Request, res:NextResponse) {
         verified: true,
       }
     })
-    // sessionテーブルにsessionを追加
-    // const sessionToken = randomBytes(32).toString("hex");
-    // const expiresAt = await new Date(Date.now() + 24 * 60 * 60 * 1000); 
-    // await prisma.session.create({
-    //   data:{
-    //     sessionToken:sessionToken,
-    //     userId:userId,
-    //     expires:expiresAt
-    //   }
-    // })
-
-    // const cookieStore = await cookies(); 
-    // await cookieStore.set({
-    //   name: "session_token",
-    //   value: sessionToken,
-    //   httpOnly: true,
-    //   secure: process.env.NODE_ENV === "production",
-    //   path: "/",
-    //   maxAge: 60 * 60 * 24, // 24時間
-    // });
-    
-    // return NextResponse.json({ message: "認証が完了しました" }, { status: 200 });
     return NextResponse.redirect(`${process.env.NEXT_PUBLIC_BASE_URL}/signin`);
   } catch (error) {
     return NextResponse.json({ message: "無効または期限切れのトークン",error }, { status: 400 });

@@ -1,9 +1,9 @@
-import { TodoType, UserType } from "@/app/types/types";
-import Todo from "@/app/components/Todo";
 import { getServerSession } from "next-auth";
-import { nextAuthOptions } from "@/app/lib/next-auth/route";
 import React from "react";
 import { redirect } from "next/navigation";
+import { nextAuthOptions } from "@/lib/next-auth/route";
+import { TodoType, UserType } from "@/types/types";
+import Todo from "@/components/Todo";
 
 const TodoDetail = async({ params }: { params: Promise<{ id: string }> }) => {
   const {id} = await params;
