@@ -1,18 +1,13 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import Paragraph from "./ui/paragraph";
+import Block from "./ui/block";
 
 const formSchema = z.object({
   id: z
@@ -48,33 +43,31 @@ const formSchema = z.object({
       message: "8文字以上で入力してください",
     }),
 });
+type formType = z.infer<typeof formSchema>;
 
 interface CredentialSignupProps {
-  className ?: string;
+  className?: string;
 }
 
-const CredentialSignup = ({className}:CredentialSignupProps) => {
-  const idRef = useRef<HTMLInputElement>(null);
-  const nameRef = useRef<HTMLInputElement>(null);
-  const emailRef = useRef<HTMLInputElement>(null);
-  const passRef = useRef<HTMLInputElement>(null);
-  const [idAlert, setIDAlert] = useState("");
-  const [emailAlert, setEmailAlert] = useState("");
+const CredentialSignup = ({ className }: CredentialSignupProps) => {
   const [responseMessage, setResponseMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-
-  const form = useForm<z.infer<typeof formSchema>>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
+  } = useForm<formType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       id: "",
+      name: "",
+      email: "",
+      password: "",
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    setIDAlert("");
-    setEmailAlert("");
+  const onSubmit = async (values: formType) => {
     setResponseMessage("");
-    setErrorMessage("");
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/credential/signup`,
@@ -83,8 +76,8 @@ const CredentialSignup = ({className}:CredentialSignupProps) => {
           body: JSON.stringify({
             userId: values.id,
             name: values.name,
-            email: emailRef.current!.value,
-            password: passRef.current!.value,
+            email: values.email,
+            password: values.password,
           }),
           headers: {
             "Content-Type": "application/json",
@@ -93,89 +86,62 @@ const CredentialSignup = ({className}:CredentialSignupProps) => {
       );
 
       const data = await res.json();
-
-      if (data.errorId === "INVALID_ID") {
-        setIDAlert(data.message);
+      if (!res.ok) {
+        if (data.errorId === "INVALID_ID") {
+          setError("id", { message: data.message });
+        } else if (data.errorId === "INVALID_EMAIL") {
+          setError("email", { message: data.message });
+        } else {
+          setError("root", { message: "ログインに失敗しました" });
+        }
       }
-      if (data.errorEmail === "INVALID_EMAIL") {
-        setEmailAlert(data.message);
+      if (res.ok) {
+        setResponseMessage(data.message);
       }
-      setResponseMessage(data.message);
     } catch (err) {
-      if (err instanceof Error) {
-        setErrorMessage(err.message);
-        console.log(err);
-      } else {
-        setErrorMessage("不明なエラーが発生しました");
-      }
+      setError("root", { message: "サーバーエラーが発生しました" });
     }
   };
 
   return (
     <div>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <FormField
-            control={form.control}
-            name="id"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>ID</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {idAlert && <p>{idAlert}</p>}
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem className="mt-6">
-                <FormLabel>ユーザー名</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            
-            render={({ field }) => (
-              <FormItem className="mt-6">
-                <FormLabel>メールアドレス</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {emailAlert && <p>{emailAlert}</p>}
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem className="mt-6">
-                <FormLabel>パスワード</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          
-          <Button type="submit" className="mt-10 max-w-60 w-full block mx-auto">送信</Button>
-        </form>
-      </Form>
-      {responseMessage && <p>{responseMessage}</p>}
-      {errorMessage && <p>{errorMessage}</p>}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {errors.root && (
+          <Paragraph variant="error">{errors.root.message}</Paragraph>
+        )}
+        <Block>
+          <Label htmlFor="id">ID</Label>
+          <Input type="text" id="id" {...register("id")} />
+          {errors.id && (
+            <Paragraph variant="error">{errors.id.message}</Paragraph>
+          )}
+        </Block>
+        <Block>
+          <Label htmlFor="name">ユーザー名</Label>
+          <Input type="text" id="name" {...register("name")} />
+          {errors.name && (
+            <Paragraph variant="error">{errors.name.message}</Paragraph>
+          )}
+        </Block>
+        <Block>
+          <Label htmlFor="email">メールアドレス</Label>
+          <Input type="email" id="email" {...register("email")} />
+          {errors.email && (
+            <Paragraph variant="error">{errors.email.message}</Paragraph>
+          )}
+        </Block>
+        <Block>
+          <Label htmlFor="password">パスワード</Label>
+          <Input type="password" id="password" {...register("password")} />
+          {errors.password && (
+            <Paragraph variant="error">{errors.password.message}</Paragraph>
+          )}
+        </Block> 
+        <Button type="submit" className="mt-10 w-48 block mx-auto">
+          送信
+        </Button>
+      </form>
+      {responseMessage && <Paragraph>{responseMessage}</Paragraph>}
     </div>
   );
 };
