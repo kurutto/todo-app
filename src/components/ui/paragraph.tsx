@@ -1,7 +1,8 @@
 import { cn } from '@/lib/utils';
 import React, { ReactNode } from 'react'
 
-interface ParagraphProps {
+interface ParagraphProps
+extends Omit<React.ComponentPropsWithoutRef<'p'>, 'className'> {
   variant ?: 'base' | 'error';
   children : ReactNode;
   className ?: string;

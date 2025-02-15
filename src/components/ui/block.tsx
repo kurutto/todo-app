@@ -1,7 +1,8 @@
 import { cn } from '@/lib/utils';
 import React, { ReactNode } from 'react'
 
-interface BlockProps {
+interface BlockProps 
+extends Omit<React.ComponentPropsWithoutRef<'div'>, 'className'>{
   children : ReactNode;
   className ?: string;
 }
