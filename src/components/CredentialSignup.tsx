@@ -132,7 +132,7 @@ const CredentialSignup = () => {
           {errors.password && (
             <Paragraph variant="error">{errors.password.message}</Paragraph>
           )}
-        </Block> 
+        </Block>
         <Button type="submit" className="mt-10 w-48 block mx-auto">
           送信
         </Button>
