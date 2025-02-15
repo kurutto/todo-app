@@ -1,7 +1,7 @@
 "use client";
 import React, { useMemo, useRef, useState } from "react";
 import { TodoType } from "@/types/types";
-import { statusList } from "../data/todos/status";
+import { statusList } from "../../data/todos/status";
 import TodoListItem from "./TodoListItem";
 interface TodoListProps {
   todos: TodoType[];

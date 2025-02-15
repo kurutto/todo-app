@@ -1,14 +1,14 @@
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import OauthSignin from "@/components/OauthSignin";
-import CredentialSignup from "@/components/CredentialSignup";
+import OauthSignin from "@/components/auth/OauthSignin";
+import CredentialSignup from "@/components/auth/CredentialSignup";
 import Heading from "@/components/ui/heading";
 import { nextAuthOptions } from "@/lib/next-auth/route";
 
 const Signup = async () => {
   const session = await getServerSession(nextAuthOptions);
-  if(session){
-    redirect('/todos');
+  if (session) {
+    redirect("/todos");
   }
 
   return (

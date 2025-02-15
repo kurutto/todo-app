@@ -5,8 +5,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import Paragraph from "./ui/paragraph";
-import Block from "./ui/block";
+import Paragraph from "../ui/paragraph";
+import Block from "../ui/block";
 import { Label } from "@radix-ui/react-label";
 
 const formSchema = z.object({
@@ -23,16 +23,16 @@ type formType = z.infer<typeof formSchema>;
 
 const CredentialSignin = () => {
   const {
-      register,
-      handleSubmit,
-      formState: { errors },
-    } = useForm<formType>({
-      resolver: zodResolver(formSchema),
-      defaultValues: {
-        id: "",
-        password: "",
-      },
-    });
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<formType>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      id: "",
+      password: "",
+    },
+  });
   const onSubmit = async (values: formType) => {
     await signIn("credentials", {
       id: values.id,
@@ -59,7 +59,7 @@ const CredentialSignin = () => {
           {errors.password && (
             <Paragraph variant="error">{errors.password.message}</Paragraph>
           )}
-        </Block> 
+        </Block>
         <Button type="submit" className="mt-10 w-48 block mx-auto">
           送信
         </Button>

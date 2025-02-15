@@ -1,13 +1,13 @@
 "use client";
 import React, { useState } from "react";
-import { TodoType } from "../types/types";
+import { TodoType } from "../../types/types";
 import { useRouter } from "next/navigation";
-import { statusList } from "../data/todos/status";
+import { statusList } from "../../data/todos/status";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import Paragraph from "./ui/paragraph";
-import Block from "./ui/block";
+import Paragraph from "../ui/paragraph";
+import Block from "../ui/block";
 import { Label } from "@radix-ui/react-label";
 import {
   Select,
@@ -16,7 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Textarea } from "./ui/textarea";
+import { Textarea } from "../ui/textarea";
 
 interface TodoProps {
   userId: string;
@@ -31,7 +31,11 @@ const Todo = ({ userId, todo, id }: TodoProps) => {
   const [title, setTitle] = useState(todo.title);
   const [content, setContent] = useState(todo.content);
   const [status, setStatus] = useState(todo.status.toString());
-  const [err, setErr] = useState<{ title ?: string; content ?: string; status ?: string }>({})
+  const [err, setErr] = useState<{
+    title?: string;
+    content?: string;
+    status?: string;
+  }>({});
   const [isEdit, setIsEdit] = useState(false);
 
   const formSchema = z.object({
@@ -66,7 +70,11 @@ const Todo = ({ userId, todo, id }: TodoProps) => {
     setErr({});
   };
   const handleSet = async () => {
-    const result = formSchema.safeParse({ title : title, content : content, status:status });
+    const result = formSchema.safeParse({
+      title: title,
+      content: content,
+      status: status,
+    });
     if (!result.success) {
       const formattedErrors = result.error.format();
       setErr({
@@ -79,7 +87,7 @@ const Todo = ({ userId, todo, id }: TodoProps) => {
       setTitle(title);
       setContent(content);
       setStatus(status);
-      setErr({})
+      setErr({});
       await fetch(`${process.env.NEXT_PUBLIC_API_URL}/todos/${userId}/${id}`, {
         method: "PUT",
         body: JSON.stringify({
@@ -106,12 +114,13 @@ const Todo = ({ userId, todo, id }: TodoProps) => {
         <Label htmlFor="title">タイトル</Label>
         {isEdit ? (
           <>
-            <Input type="text" id="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)} />
-            {err.title && (
-              <Paragraph variant="error">{err.title}</Paragraph>
-            )}
+            <Input
+              type="text"
+              id="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            {err.title && <Paragraph variant="error">{err.title}</Paragraph>}
           </>
         ) : (
           <Paragraph>{title}</Paragraph>
@@ -139,7 +148,7 @@ const Todo = ({ userId, todo, id }: TodoProps) => {
         {isEdit ? (
           <Select value={status.toString()} onValueChange={setStatus}>
             <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder={statusList[todo.status]}  />
+              <SelectValue placeholder={statusList[todo.status]} />
             </SelectTrigger>
             <SelectContent id="content">
               {statusList.map((status, idx) => (
@@ -155,7 +164,9 @@ const Todo = ({ userId, todo, id }: TodoProps) => {
       </Block>
       {isEdit && (
         <Block margin="lg">
-          <Button onClick={handleSet} className="mr-3">保存</Button>
+          <Button onClick={handleSet} className="mr-3">
+            保存
+          </Button>
           <Button variant="secondary" onClick={handleCancel}>
             キャンセル
           </Button>

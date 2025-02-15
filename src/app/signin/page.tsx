@@ -1,15 +1,15 @@
-import React from 'react'
-import OauthSignin from '@/components/OauthSignin';
-import CredentialSignin from '@/components/CredentialSignin';
-import { getServerSession } from 'next-auth';
-import { redirect } from 'next/navigation';
-import Heading from '@/components/ui/heading';
-import { nextAuthOptions } from '@/lib/next-auth/route';
+import React from "react";
+import OauthSignin from "@/components/auth/OauthSignin";
+import CredentialSignin from "@/components/auth/CredentialSignin";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import Heading from "@/components/ui/heading";
+import { nextAuthOptions } from "@/lib/next-auth/route";
 
-const SignIn = async() => {
+const SignIn = async () => {
   const session = await getServerSession(nextAuthOptions);
-  if(session){
-    redirect('/todos');
+  if (session) {
+    redirect("/todos");
   }
   return (
     <div>
@@ -21,7 +21,7 @@ const SignIn = async() => {
         <CredentialSignin />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SignIn
+export default SignIn;
