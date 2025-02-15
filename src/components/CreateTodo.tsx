@@ -1,6 +1,5 @@
 'use client'
 import { useRouter } from 'next/navigation';
-import React, { useRef } from 'react';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -42,14 +41,10 @@ interface CreateTodoProps {
 
 const CreateTodo = ({userId}:CreateTodoProps) => {
   const router = useRouter();
-  const titleRef = useRef<HTMLInputElement>(null);
-  const contentRef = useRef<HTMLTextAreaElement>(null);
-  const statusRef = useRef<HTMLSelectElement>(null);
   const {
       register,
       handleSubmit,
       formState: { errors },
-      setError,
     } = useForm<formType>({
       resolver: zodResolver(formSchema),
       defaultValues: {
@@ -99,28 +94,10 @@ const CreateTodo = ({userId}:CreateTodoProps) => {
           </SelectContent>
         </Select>
       </Block>
-    {/* <label>タイトル</label>
-    <div>
-      <input type="text" ref={titleRef} />
-    </div>
-    <label>内容</label>
-    <div>
-      <textarea ref={contentRef}></textarea>
-    </div>
-    <label>ステータス</label>
-    <div>
-    
-      <select ref={statusRef}>
-        {statusList.map((status,idx) => (
-          <option key={idx} value={idx}>{status}</option>
-        ))}
-      </select>
-    </div> */}
-    <Button type="submit" className="mt-10 w-48 block mx-auto">
-      送信
-    </Button>
-    {/* <button type="submit">送信</button> */}
-  </form>
+      <Button type="submit" className="mt-10 w-48 block mx-auto">
+        送信
+      </Button>
+    </form>
   )
 }
 
