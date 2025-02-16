@@ -162,21 +162,20 @@ const Todo = ({ userId, todo, id }: TodoProps) => {
           <Paragraph>{statusList[Number(status)]}</Paragraph>
         )}
       </Block>
-      {isEdit ? (
-        <Block margin="lg">
-          <Button onClick={handleSet} className="mr-3">
-            保存
-          </Button>
-          <Button variant="secondary" onClick={handleCancel}>
-            キャンセル
-          </Button>
-        </Block>
-      ):(
-        <Block margin="lg">
-          <Button onClick={handleEdit}>編集</Button>
-        </Block>
-      )}
-
+      <Block margin="lg">
+        {isEdit ? (
+          <>
+            <Button onClick={handleSet} className="mr-3">
+              保存
+            </Button>
+            <Button variant="secondary" onClick={handleCancel}>
+              キャンセル
+            </Button>
+          </>
+          ) : (
+            <Button onClick={handleEdit}>編集</Button>
+          )}
+      </Block>
       <Block margin="sm">
         <Button variant="destructive" onClick={handleDelete}>
           削除
