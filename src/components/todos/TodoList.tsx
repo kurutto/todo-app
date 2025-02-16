@@ -1,40 +1,37 @@
 "use client";
-import React, { useMemo, useRef, useState } from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+import React, { useRef, useState } from "react";
 import { TodoType } from "@/types/types";
 import { statusList } from "../../data/todos/status";
-import TodoListItem from "./TodoListItem";
+import Link from "next/link";
+import { Button } from "../ui/button";
+import { Label } from "../ui/label";
+import { Checkbox } from "../ui/checkbox";
+import Heading from "../ui/heading";
+import { Input } from "../ui/input";
+import Block from "../ui/block";
 interface TodoListProps {
   todos: TodoType[];
 }
 const TodoList = ({ todos }: TodoListProps) => {
+  const [filterStatus, setFilterStatus] = useState([false, false, false])
   const [filter, setFilter] = useState<number[]>([]);
   const [todoList, setTodoList] = useState(todos);
   const filterTextRef = useRef<HTMLInputElement>(null);
-  const listItemRefs = useRef<{
-    [key in number]: HTMLInputElement;
-  }>({});
-  const convertedList = useMemo(
-    () =>
-      statusList.map((status, idx) => ({
-        id: idx,
-        refCallbackFunction: (node: HTMLInputElement | null) => {
-          if (node !== null && listItemRefs.current[idx] === undefined) {
-            // node が null でなく、かつ、ref が未登録の場合
-            listItemRefs.current[idx] = node;
-          } else {
-            // node が null の場合は、対象の node を管理する必要がなくなるため削除
-            delete listItemRefs.current[idx];
-          }
-        },
-      })),
-    [statusList]
-  );
-  const handleChangeFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFilter((prevFilter) =>
-      prevFilter.includes(Number(e.target.value))
-        ? prevFilter.filter((item) => item != Number(e.target.value))
-        : [Number(e.target.value), ...prevFilter]
-    );
+  
+  const handleChangeFilter = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const idx = e.currentTarget.getAttribute("data-value");
+    console.log(idx);
+    setFilter((prevFilter) => prevFilter.includes(Number(idx)) ? prevFilter.filter((item) => item != Number(idx))
+        : [Number(idx), ...prevFilter]
+    )
   };
   const handleFilter = () => {
     if (filter) {
@@ -45,9 +42,7 @@ const TodoList = ({ todos }: TodoListProps) => {
   const handleFilterReset = () => {
     setTodoList(todos);
     setFilter([]);
-    for (let i = 0; i < statusList.length; i++) {
-      listItemRefs.current[i].checked = false;
-    }
+    setFilterStatus([false,false,false])
   };
   const handleTextFilter = () => {
     if (filterTextRef.current!.value) {
@@ -94,35 +89,61 @@ const TodoList = ({ todos }: TodoListProps) => {
 
   return (
     <div>
-      <div>フィルター</div>
-      <ul>
-        {convertedList?.map((item, idx) => (
-          <li key={idx} tabIndex={0}>
-            <label>
-              <input
-                type="checkbox"
-                value={idx}
-                onChange={handleChangeFilter}
-                ref={item.refCallbackFunction}
+      <Block className="rounded-md border p-4 shadow">
+        <Heading level={3} className="mt-0">ステータスを選択</Heading>
+        <div className="flex justify-between">
+          <ul className="flex gap-5">
+          {statusList.map((item, idx) => (
+            <li key={idx} tabIndex={0} className="flex items-center space-x-1">
+              <Checkbox
+                id={`filter${idx}`}
+                data-value={idx}
+                checked={filterStatus[idx]}
+                onClick={handleChangeFilter}
+                onCheckedChange={(checked:boolean) => setFilterStatus(prev => [...prev,prev[idx]=checked] )}
               />
-              {statusList[idx]}
-            </label>
-          </li>
-        ))}
-      </ul>
-      <button onClick={handleFilter}>実行</button>
-      <button onClick={handleFilterReset}>リセット</button>
-      <div>フィルター２</div>
-      <input type="text" ref={filterTextRef} />
-      <button onClick={handleTextFilter}>実行</button>
-      <button onClick={handleTextFilterReset}>リセット</button>
-      <button onClick={handleSortAscending}>昇順にソート</button>
-      <button onClick={handleSortDescending}>降順にソート</button>
-      <ul>
-        {todoList.map((todo: TodoType) => (
-          <TodoListItem key={todo.id} todo={todo} statusList={statusList} />
-        ))}
-      </ul>
+              <Label htmlFor={`filter${idx}`}>
+                {item}
+              </Label>
+            </li>
+          ))}
+          </ul>
+          <div className="flex gap-1">
+            <Button variant="secondary" onClick={handleFilter}>実行</Button>
+            <Button variant="secondary" onClick={handleFilterReset}>リセット</Button>
+          </div>
+        </div>
+      </Block>
+      <Block className="rounded-md border p-4 shadow">
+        <Heading level={3} className="mt-0">用語で検索</Heading>
+        <div className="flex justify-between gap-5">
+          <Input type="text" ref={filterTextRef} />
+          <div className="flex gap-1">
+            <Button variant="secondary" onClick={handleTextFilter}>実行</Button>
+            <Button variant="secondary" onClick={handleTextFilterReset}>リセット</Button>
+          </div>
+        </div>
+      </Block>
+      <Table className="mt-10">
+        <TableHeader>
+          <TableRow>
+            <TableHead>タイトル</TableHead>
+            <TableHead className="w-24 text-center">ステータス</TableHead>
+            <TableHead className="w-28 text-center">作成日<br /><span onClick={handleSortAscending} className="rounded-sm p-1 cursor-pointer">&uarr;</span><span onClick={handleSortDescending} className="rounded-sm p-1 cursor-pointer">&darr;</span></TableHead>
+            <TableHead className="w-24 text-center">&nbsp;</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {todoList.map((todo: TodoType) => (
+            <TableRow key={todo.id}>
+              <TableCell>{todo.title}</TableCell>
+              <TableCell className="text-center">{statusList[todo.status]}</TableCell>
+              <TableCell className="text-center">{new Date(todo.createdAt).toLocaleDateString()}</TableCell>
+              <TableCell className="text-center"><Button><Link href={`/todos/${todo.id}`}>詳細</Link></Button></TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </div>
   );
 };

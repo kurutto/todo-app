@@ -5,6 +5,9 @@ import TodoList from "@/components/todos/TodoList";
 import { UserType } from "@/types/types";
 import { nextAuthOptions } from "@/lib/next-auth/route";
 import { fetchTodos } from "@/lib/fetchTodos";
+import { Button } from "@/components/ui/button";
+import Block from "@/components/ui/block";
+import Heading from "@/components/ui/heading";
 
 const page = async () => {
   const session = await getServerSession(nextAuthOptions);
@@ -12,8 +15,11 @@ const page = async () => {
   const todos = await fetchTodos(user.id);
   return (
     <div>
+      <Heading level={1}>Todo一覧</Heading>
       <TodoList todos={todos} />
-      <Link href="/todos/create">新規作成</Link>
+      <Block margin="lg" className="text-center">
+      <Button variant="outline"><Link href="/todos/create">新規作成</Link></Button>
+      </Block>
     </div>
   );
 };
