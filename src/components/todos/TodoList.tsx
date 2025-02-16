@@ -6,7 +6,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from "@/components/ui/table";
 import React, { useRef, useState } from "react";
 import { TodoType } from "@/types/types";
 import { statusList } from "../../data/todos/status";
@@ -21,19 +21,17 @@ interface TodoListProps {
   todos: TodoType[];
 }
 const TodoList = ({ todos }: TodoListProps) => {
-  const [filterStatus, setFilterStatus] = useState([false, false, false])
-  const [filter, setFilter] = useState<number[]>([]);
+  const [filterStatus, setFilterStatus] = useState([false, false, false]);
   const [todoList, setTodoList] = useState(todos);
   const filterTextRef = useRef<HTMLInputElement>(null);
-  
-  const handleChangeFilter = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const idx = e.currentTarget.getAttribute("data-value");
-    console.log(idx);
-    setFilter((prevFilter) => prevFilter.includes(Number(idx)) ? prevFilter.filter((item) => item != Number(idx))
-        : [Number(idx), ...prevFilter]
-    )
-  };
+  const handleChangeStatus = (checked:boolean,idx:number) => {
+    const newList = [...filterStatus];
+    newList[idx] = checked;
+    setFilterStatus(newList);
+  }
   const handleFilter = () => {
+    const filter = filterStatus.map((item,idx) => item === true ? idx : null )
+    console.log(filter)
     if (filter) {
       const newList = todos.filter((todo) => filter.includes(todo.status));
       setTodoList(newList);
@@ -41,8 +39,7 @@ const TodoList = ({ todos }: TodoListProps) => {
   };
   const handleFilterReset = () => {
     setTodoList(todos);
-    setFilter([]);
-    setFilterStatus([false,false,false])
+    setFilterStatus([false, false, false]);
   };
   const handleTextFilter = () => {
     if (filterTextRef.current!.value) {
@@ -90,37 +87,51 @@ const TodoList = ({ todos }: TodoListProps) => {
   return (
     <div>
       <Block className="rounded-md border p-4 shadow">
-        <Heading level={3} className="mt-0">ステータスを選択</Heading>
+        <Heading level={3} className="mt-0">
+          ステータスを選択
+        </Heading>
         <div className="flex justify-between">
           <ul className="flex gap-5">
-          {statusList.map((item, idx) => (
-            <li key={idx} tabIndex={0} className="flex items-center space-x-1">
-              <Checkbox
-                id={`filter${idx}`}
-                data-value={idx}
-                checked={filterStatus[idx]}
-                onClick={handleChangeFilter}
-                onCheckedChange={(checked:boolean) => setFilterStatus(prev => [...prev,prev[idx]=checked] )}
-              />
-              <Label htmlFor={`filter${idx}`}>
-                {item}
-              </Label>
-            </li>
-          ))}
+            {statusList.map((item, idx) => (
+              <li
+                key={idx}
+                tabIndex={0}
+                className="flex items-center space-x-1"
+              >
+                <Checkbox
+                  id={`filter${idx}`}
+                  data-value={idx}
+                  checked={filterStatus[idx]}
+                  onCheckedChange={(checked: boolean) =>
+                    handleChangeStatus(checked,idx)}
+                />
+                <Label htmlFor={`filter${idx}`}>{item}</Label>
+              </li>
+            ))}
           </ul>
           <div className="flex gap-1">
-            <Button variant="secondary" onClick={handleFilter}>実行</Button>
-            <Button variant="secondary" onClick={handleFilterReset}>リセット</Button>
+            <Button variant="secondary" onClick={handleFilter}>
+              実行
+            </Button>
+            <Button variant="secondary" onClick={handleFilterReset}>
+              リセット
+            </Button>
           </div>
         </div>
       </Block>
       <Block className="rounded-md border p-4 shadow">
-        <Heading level={3} className="mt-0">用語で検索</Heading>
+        <Heading level={3} className="mt-0">
+          用語で検索
+        </Heading>
         <div className="flex justify-between gap-5">
           <Input type="text" ref={filterTextRef} />
           <div className="flex gap-1">
-            <Button variant="secondary" onClick={handleTextFilter}>実行</Button>
-            <Button variant="secondary" onClick={handleTextFilterReset}>リセット</Button>
+            <Button variant="secondary" onClick={handleTextFilter}>
+              実行
+            </Button>
+            <Button variant="secondary" onClick={handleTextFilterReset}>
+              リセット
+            </Button>
           </div>
         </div>
       </Block>
@@ -129,7 +140,22 @@ const TodoList = ({ todos }: TodoListProps) => {
           <TableRow>
             <TableHead>タイトル</TableHead>
             <TableHead className="w-24 text-center">ステータス</TableHead>
-            <TableHead className="w-28 text-center">作成日<br /><span onClick={handleSortAscending} className="rounded-sm p-1 cursor-pointer">&uarr;</span><span onClick={handleSortDescending} className="rounded-sm p-1 cursor-pointer">&darr;</span></TableHead>
+            <TableHead className="w-28 text-center">
+              作成日
+              <br />
+              <span
+                onClick={handleSortAscending}
+                className="rounded-sm p-1 cursor-pointer"
+              >
+                &uarr;
+              </span>
+              <span
+                onClick={handleSortDescending}
+                className="rounded-sm p-1 cursor-pointer"
+              >
+                &darr;
+              </span>
+            </TableHead>
             <TableHead className="w-24 text-center">&nbsp;</TableHead>
           </TableRow>
         </TableHeader>
@@ -137,9 +163,17 @@ const TodoList = ({ todos }: TodoListProps) => {
           {todoList.map((todo: TodoType) => (
             <TableRow key={todo.id}>
               <TableCell>{todo.title}</TableCell>
-              <TableCell className="text-center">{statusList[todo.status]}</TableCell>
-              <TableCell className="text-center">{new Date(todo.createdAt).toLocaleDateString()}</TableCell>
-              <TableCell className="text-center"><Button><Link href={`/todos/${todo.id}`}>詳細</Link></Button></TableCell>
+              <TableCell className="text-center">
+                {statusList[todo.status]}
+              </TableCell>
+              <TableCell className="text-center">
+                {new Date(todo.createdAt).toLocaleDateString()}
+              </TableCell>
+              <TableCell className="text-center">
+                <Button>
+                  <Link href={`/todos/${todo.id}`}>詳細</Link>
+                </Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
