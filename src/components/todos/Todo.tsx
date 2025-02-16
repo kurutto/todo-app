@@ -110,7 +110,7 @@ const Todo = ({ userId, todo, id }: TodoProps) => {
   };
   return (
     <div>
-      <Block>
+      <Block variant="form">
         <Label htmlFor="title">タイトル</Label>
         {isEdit ? (
           <>
@@ -126,7 +126,7 @@ const Todo = ({ userId, todo, id }: TodoProps) => {
           <Paragraph>{title}</Paragraph>
         )}
       </Block>
-      <Block>
+      <Block variant="form">
         <Label htmlFor="content">内容</Label>
         {isEdit ? (
           <>
@@ -143,7 +143,7 @@ const Todo = ({ userId, todo, id }: TodoProps) => {
           <Paragraph>{content}</Paragraph>
         )}
       </Block>
-      <Block>
+      <Block variant="form">
         <Label htmlFor="title">ステータス</Label>
         {isEdit ? (
           <Select value={status.toString()} onValueChange={setStatus}>
@@ -165,10 +165,10 @@ const Todo = ({ userId, todo, id }: TodoProps) => {
       <Block margin="lg">
         {isEdit ? (
           <>
-            <Button onClick={handleSet} className="mr-3">
+            <Button onClick={handleSet}>
               保存
             </Button>
-            <Button variant="secondary" onClick={handleCancel}>
+            <Button variant="link" onClick={handleCancel}>
               キャンセル
             </Button>
           </>
@@ -176,11 +176,13 @@ const Todo = ({ userId, todo, id }: TodoProps) => {
             <Button onClick={handleEdit}>編集</Button>
           )}
       </Block>
-      <Block margin="sm">
-        <Button variant="destructive" onClick={handleDelete}>
-          削除
-        </Button>
+      <Block className="flex justify-between">
+          <Button variant="outline" onClick={handleDelete} className="hover:bg-[#ef4444] hover:text-white">
+            削除
+          </Button>
       </Block>
+      
+      
     </div>
   );
 };

@@ -105,28 +105,28 @@ const CredentialSignup = () => {
         {errors.root && (
           <Paragraph variant="error">{errors.root.message}</Paragraph>
         )}
-        <Block>
+        <Block variant="form">
           <Label htmlFor="id">ID</Label>
           <Input type="text" id="id" {...register("id")} />
           {errors.id && (
             <Paragraph variant="error">{errors.id.message}</Paragraph>
           )}
         </Block>
-        <Block>
+        <Block variant="form">
           <Label htmlFor="name">ユーザー名</Label>
           <Input type="text" id="name" {...register("name")} />
           {errors.name && (
             <Paragraph variant="error">{errors.name.message}</Paragraph>
           )}
         </Block>
-        <Block>
+        <Block variant="form">
           <Label htmlFor="email">メールアドレス</Label>
           <Input type="email" id="email" {...register("email")} />
           {errors.email && (
             <Paragraph variant="error">{errors.email.message}</Paragraph>
           )}
         </Block>
-        <Block>
+        <Block variant="form">
           <Label htmlFor="password">パスワード</Label>
           <Input type="password" id="password" {...register("password")} />
           {errors.password && (
@@ -134,7 +134,7 @@ const CredentialSignup = () => {
           )}
         </Block>
         <Button type="submit" className="mt-10 w-48 block mx-auto">
-          送信
+          新規作成
         </Button>
       </form>
       {responseMessage && <Paragraph>{responseMessage}</Paragraph>}

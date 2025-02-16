@@ -15,9 +15,8 @@ const Signup = async () => {
     <div>
       <Heading level={1}>アカウント作成</Heading>
       <div className="mx-auto max-w-md">
-        <Heading level={2}>既存のアカウントで作成</Heading>
         <OauthSignin />
-        <Heading level={2}>IDとパスワードで作成</Heading>
+        <Heading level={2}>アカウント情報を登録して作成</Heading>
         <CredentialSignup />
       </div>
     </div>

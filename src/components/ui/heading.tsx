@@ -16,7 +16,8 @@ const Heading = ({
   const Tag = `h${level}` as const;
   const baseStyle = cn(
     level === 1 && "text-2xl text-center font-semibold mb-12",
-    level === 2 && "text-lg text-center mb-6 mt-12"
+    level === 2 && "text-lg text-center mb-6 mt-12",
+    level === 3 && "text-base font-bold mb-3 mt-4",
   );
   return (
     <>

@@ -65,21 +65,21 @@ const CreateTodo = ({ userId }: CreateTodoProps) => {
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Block>
+      <Block variant="form">
         <Label htmlFor="title">タイトル</Label>
         <Input type="text" id="title" {...register("title")} />
         {errors.title && (
           <Paragraph variant="error">{errors.title.message}</Paragraph>
         )}
       </Block>
-      <Block>
+      <Block variant="form">
         <Label htmlFor="content">内容</Label>
         <Textarea id="content" {...register("content")} />
         {errors.content && (
           <Paragraph variant="error">{errors.content.message}</Paragraph>
         )}
       </Block>
-      <Block>
+      <Block variant="form">
         <Label htmlFor="status">ステータス</Label>
         <Select>
           <SelectTrigger className="w-[180px]">

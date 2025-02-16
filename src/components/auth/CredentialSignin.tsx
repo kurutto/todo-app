@@ -10,14 +10,8 @@ import Block from "../ui/block";
 import { Label } from "@radix-ui/react-label";
 
 const formSchema = z.object({
-  id: z.string({
-    required_error: "必須項目です",
-    invalid_type_error: "入力値に誤りがります",
-  }),
-  password: z.string({
-    required_error: "必須項目です",
-    invalid_type_error: "入力値に誤りがります",
-  }),
+  id: z.string().min(1, { message: "必須項目です" }),
+  password: z.string().min(1, { message: "必須項目です" }),
 });
 type formType = z.infer<typeof formSchema>;
 
@@ -34,11 +28,11 @@ const CredentialSignin = () => {
     },
   });
   const onSubmit = async (values: formType) => {
-    await signIn("credentials", {
-      id: values.id,
-      password: values.password,
-      callbackUrl: "/todos",
-    });
+      await signIn("credentials", {
+        id: values.id,
+        password: values.password,
+        callbackUrl: "/todos",
+      });
   };
   return (
     <div>
@@ -46,14 +40,14 @@ const CredentialSignin = () => {
         {errors.root && (
           <Paragraph variant="error">{errors.root.message}</Paragraph>
         )}
-        <Block>
+        <Block variant="form">
           <Label htmlFor="id">ID</Label>
           <Input type="text" id="id" {...register("id")} />
           {errors.id && (
             <Paragraph variant="error">{errors.id.message}</Paragraph>
           )}
         </Block>
-        <Block>
+        <Block variant="form">
           <Label htmlFor="password">パスワード</Label>
           <Input type="password" id="password" {...register("password")} />
           {errors.password && (
@@ -61,7 +55,7 @@ const CredentialSignin = () => {
           )}
         </Block>
         <Button type="submit" className="mt-10 w-48 block mx-auto">
-          送信
+          ログイン
         </Button>
       </form>
     </div>
