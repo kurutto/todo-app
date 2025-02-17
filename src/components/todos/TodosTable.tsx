@@ -5,10 +5,13 @@ import {
   TableHead,
   TableHeader,
   TableRow,
+  TableCell,
 } from "@/components/ui/table";
 import React from "react";
 import { TodoType } from "@/types/types";
-import TodosTableRow from "./TodosTableRow";
+import { statusList } from "@/data/todos/status";
+import { Button } from "../ui/button";
+import Link from "next/link";
 
 interface TodosTableProps {
   todoList: TodoType[];
@@ -70,7 +73,20 @@ const TodosTable = ({ todoList, handleSetTodoList }: TodosTableProps) => {
         </TableHeader>
         <TableBody>
           {todoList.map((todo: TodoType) => (
-            <TodosTableRow key={todo.id} todo={todo} />
+            <TableRow key={todo.id}>
+              <TableCell>{todo.title}</TableCell>
+              <TableCell className="text-center">
+                {statusList[todo.status]}
+              </TableCell>
+              <TableCell className="text-center">
+                {new Date(todo.createdAt).toLocaleDateString()}
+              </TableCell>
+              <TableCell className="text-center">
+                <Button asChild>
+                  <Link href={`/todos/${todo.id}`}>詳細</Link>
+                </Button>
+              </TableCell>
+            </TableRow>
           ))}
         </TableBody>
       </Table>
