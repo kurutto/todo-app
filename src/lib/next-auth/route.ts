@@ -48,20 +48,35 @@ export const nextAuthOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   callbacks: {
     async jwt({ token, trigger, user, account }) {
-
-      if (user) {
-        token.sub = user.id;
-        token.name = user.name;
-        token.email = user.email;
-        token.emailVerified = user.emailVerified ? user.emailVerified : null;
-        token.jat = Math.floor(Date.now() / 1000);
-        await prisma.user.update({ where: { id: token.sub as string },data:{lastLogin:new Date(token.jat as number * 1000) } });
-      }
-      if (account) {
-        const dbUser = await prisma.user.findUnique({ where: { id: token.sub as string } });
-        if (dbUser) {
-          token.emailVerified = dbUser.emailVerified;
+      if(trigger ==='signIn'){
+        if (user) {
+          token.sub = user.id;
+          token.name = user.name;
+          token.email = user.email;
+          token.emailVerified = user.emailVerified ? user.emailVerified : null;
+          token.jat = Math.floor(Date.now() / 1000);
+          token.exp = Math.floor(Date.now() / 1000) + 43200;
+          await prisma.user.update({ where: { id: token.sub as string },data:{lastLogin:new Date(token.jat as number * 1000) } });
         }
+        if (account) {
+          const dbUser = await prisma.user.findUnique({ where: { id: token.sub as string } });
+          if (dbUser) {
+            token.emailVerified = dbUser.emailVerified;
+          }
+          token.jat = Math.floor(Date.now() / 1000);
+          token.exp = Math.floor(Date.now() / 1000) + 43200;
+        }
+      }
+      if(trigger === 'update'){
+        const dbData = await prisma.user.findUnique({
+          where: { email: token.email! },
+        });
+        if(dbData ===null) return token;
+        token.sub = dbData.id;
+        token.name = dbData.name;
+        token.picture = dbData.image;
+        token.emailVerified = dbData.emailVerified;
+        token.jat = dbData.lastLogin ? Math.floor(dbData.lastLogin.getTime() / 1000) : null;
       }
       return token;
     },
