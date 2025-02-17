@@ -2,11 +2,11 @@ import { getServerSession } from "next-auth";
 import React from "react";
 import { UserType } from "@/types/types";
 import { redirect } from "next/navigation";
-import TodoListItem from "@/components/todos/TodoListItem";
 import UserData from "@/components/mypage/UserData";
-import { statusList } from "@/data/todos/status";
 import { nextAuthOptions } from "@/lib/next-auth/route";
 import { fetchTodos } from "@/lib/fetchTodos";
+import Heading from "@/components/ui/heading";
+import UserTodos from "@/components/mypage/UserTodos";
 
 const Mypage = async () => {
   const session = await getServerSession(nextAuthOptions);
@@ -14,19 +14,14 @@ const Mypage = async () => {
     redirect("/login");
   }
   const user = session.user as UserType;
-  const todos = fetchTodos(user.id);
+  const todos = await fetchTodos(user.id);
   return (
     <div>
-      <h2>ユーザー情報</h2>
+      <Heading level={1}>ユーザー情報</Heading>
       <UserData user={user} />
-      <h2>TODO</h2>
-      {todos ? (
-        <ul>
-          {(await todos).map((todo) => (
-            <TodoListItem key={todo.id} todo={todo} statusList={statusList} />
-          ))}
-        </ul>
-      ) : null}
+      <Heading level={2} className="mb-0">TODO</Heading>
+      <UserTodos todos={todos} />
+      
     </div>
   );
 };

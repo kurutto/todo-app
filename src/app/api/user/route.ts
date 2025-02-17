@@ -5,7 +5,7 @@ export async function POST(req:Request){
   try{
     const { previousId, newId, name } = await req.json();
     const user = await prisma.user.findFirst({where:{id:newId}});
-    if(user){
+    if(user && previousId != newId){
       return NextResponse.json({ message: "このIDは既に登録されています",
         errorId: "INVALID_ID" }, { status: 400 })
     }
