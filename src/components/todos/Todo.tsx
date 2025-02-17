@@ -26,9 +26,7 @@ interface TodoProps {
 }
 const Todo = ({ userId, todo, id }: TodoProps) => {
   const router = useRouter();
-  const [preTitle, setPreTitle] = useState(todo.title);
-  const [preContent, setPreContent] = useState(todo.content);
-  const [preStatus, setPreStatus] = useState(todo.status.toString());
+  const [preData, setPreData] = useState([todo.title,todo.content,todo.status.toString()])
   const [title, setTitle] = useState(todo.title);
   const [content, setContent] = useState(todo.content);
   const [status, setStatus] = useState(todo.status.toString());
@@ -51,20 +49,18 @@ const Todo = ({ userId, todo, id }: TodoProps) => {
       .max(50, {
         message: "50文字以内で入力してください",
       })
-      .default(content!),
+      .default(content ? content : ''),
     status: z.string().default(status.toString()),
   });
   const handleEdit = () => {
     setIsEdit(true);
-    setPreTitle(title);
-    setPreContent(content);
-    setPreStatus(status);
+    setPreData([title,content,status]);
   };
   const handleCancel = () => {
     setIsEdit(false);
-    setTitle(preTitle);
-    setContent(preContent);
-    setStatus(preStatus);
+    setTitle(preData[0]);
+    setContent(preData[1]);
+    setStatus(preData[2]?preData[2]:'');
     setErr({});
   };
   const handleSet = async () => {

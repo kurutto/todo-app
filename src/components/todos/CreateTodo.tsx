@@ -22,11 +22,9 @@ const formSchema = z.object({
   title: z.string().min(1, {
     message: "必須項目です",
   }),
-  content: z
-    .string()
-    .max(50, {
-      message: "50文字以内で入力してください",
-    }),
+  content: z.string().max(50, {
+    message: "50文字以内で入力してください",
+  }),
   status: z.string(),
 });
 type formType = z.infer<typeof formSchema>;
@@ -45,7 +43,7 @@ const CreateTodo = ({ userId }: CreateTodoProps) => {
     defaultValues: {
       title: "",
       content: "",
-      status: "1",
+      status: "0",
     },
   });
   const onSubmit = async (values: formType) => {
