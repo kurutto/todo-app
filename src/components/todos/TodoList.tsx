@@ -174,7 +174,7 @@ const TodoList = ({ todos }: TodoListProps) => {
                 {new Date(todo.createdAt).toLocaleDateString()}
               </TableCell>
               <TableCell className="text-center">
-                <Button>
+                <Button asChild>
                   <Link href={`/todos/${todo.id}`}>詳細</Link>
                 </Button>
               </TableCell>

@@ -15,10 +15,10 @@ const page = async () => {
   const todos = await fetchTodos(user.id);
   return (
     <div>
-      <Heading level={1}>Todo一覧</Heading>
+      <Heading level={1}>TODO一覧</Heading>
       <TodoList todos={todos} />
       <Block margin="lg" className="text-center">
-      <Button variant="outline"><Link href="/todos/create">新規作成</Link></Button>
+      <Button asChild variant="outline"><Link href="/todos/create">新規作成</Link></Button>
       </Block>
     </div>
   );
