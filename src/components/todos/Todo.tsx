@@ -48,9 +48,6 @@ const Todo = ({ userId, todo, id }: TodoProps) => {
       .default(title!),
     content: z
       .string()
-      .min(1, {
-        message: "必須項目です",
-      })
       .max(50, {
         message: "50文字以内で入力してください",
       })
@@ -112,7 +109,6 @@ const Todo = ({ userId, todo, id }: TodoProps) => {
   return (
     <div>
       <div>
-        {/* <Label htmlFor="title">タイトル</Label> */}
         {isEdit ? (
           <>
             <Input
@@ -126,62 +122,63 @@ const Todo = ({ userId, todo, id }: TodoProps) => {
         ) : (
           <Heading level={3}>{title}</Heading>
         )}
-      <Block variant="form">
-        {/* <Label htmlFor="content">内容</Label> */}
-        {isEdit ? (
-          <>
-            <Textarea
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              id="content"
-            />
-            {err.content && (
-              <Paragraph variant="error">{err.content}</Paragraph>
-            )}
-          </>
-        ) : (
-          <Paragraph>{content}</Paragraph>
-        )}
-      </Block>
-      <Block variant="form" className="flex items-center">
-        <Label htmlFor="title" className="inline-block">ステータス：</Label>
-        {isEdit ? (
-          <Select value={status.toString()} onValueChange={setStatus}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder={statusList[todo.status]} />
-            </SelectTrigger>
-            <SelectContent id="content">
-              {statusList.map((status, idx) => (
-                <SelectItem key={idx} value={idx.toString()}>
-                  {status}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        ) : (
-          <Paragraph>{statusList[Number(status)]}</Paragraph>
-        )}
-      </Block>
+        <Block variant="form">
+          {isEdit ? (
+            <>
+              <Textarea
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                id="content"
+              />
+              {err.content && (
+                <Paragraph variant="error">{err.content}</Paragraph>
+              )}
+            </>
+          ) : (
+            <Paragraph>{content}</Paragraph>
+          )}
+        </Block>
+        <Block variant="form" className="flex items-center">
+          <Label htmlFor="title" className="inline-block">
+            ステータス：
+          </Label>
+          {isEdit ? (
+            <Select value={status.toString()} onValueChange={setStatus}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder={statusList[todo.status]} />
+              </SelectTrigger>
+              <SelectContent id="content">
+                {statusList.map((status, idx) => (
+                  <SelectItem key={idx} value={idx.toString()}>
+                    {status}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          ) : (
+            <Paragraph>{statusList[Number(status)]}</Paragraph>
+          )}
+        </Block>
       </div>
       <Block margin="lg" className="flex justify-between">
         {isEdit ? (
           <div>
-            <Button onClick={handleSet}>
-              保存
-            </Button>
+            <Button onClick={handleSet}>保存</Button>
             <Button variant="link" onClick={handleCancel}>
               キャンセル
             </Button>
           </div>
-          ) : (
-            <Button onClick={handleEdit}>編集</Button>
-          )}
-          <Button variant="outline" onClick={handleDelete} className="hover:bg-[#ef4444] hover:text-white">
-            削除
-          </Button>
+        ) : (
+          <Button onClick={handleEdit}>編集</Button>
+        )}
+        <Button
+          variant="outline"
+          onClick={handleDelete}
+          className="hover:bg-[#ef4444] hover:text-white"
+        >
+          削除
+        </Button>
       </Block>
-      
-      
     </div>
   );
 };
