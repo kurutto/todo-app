@@ -24,9 +24,6 @@ const formSchema = z.object({
   }),
   content: z
     .string()
-    .min(1, {
-      message: "必須項目です",
-    })
     .max(50, {
       message: "50文字以内で入力してください",
     }),
