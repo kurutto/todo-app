@@ -17,6 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "../ui/textarea";
+import Heading from "../ui/heading";
 
 interface TodoProps {
   userId: string;
@@ -110,8 +111,8 @@ const Todo = ({ userId, todo, id }: TodoProps) => {
   };
   return (
     <div>
-      <Block variant="form">
-        <Label htmlFor="title">タイトル</Label>
+      <div>
+        {/* <Label htmlFor="title">タイトル</Label> */}
         {isEdit ? (
           <>
             <Input
@@ -123,11 +124,10 @@ const Todo = ({ userId, todo, id }: TodoProps) => {
             {err.title && <Paragraph variant="error">{err.title}</Paragraph>}
           </>
         ) : (
-          <Paragraph>{title}</Paragraph>
+          <Heading level={3}>{title}</Heading>
         )}
-      </Block>
       <Block variant="form">
-        <Label htmlFor="content">内容</Label>
+        {/* <Label htmlFor="content">内容</Label> */}
         {isEdit ? (
           <>
             <Textarea
@@ -143,8 +143,8 @@ const Todo = ({ userId, todo, id }: TodoProps) => {
           <Paragraph>{content}</Paragraph>
         )}
       </Block>
-      <Block variant="form">
-        <Label htmlFor="title">ステータス</Label>
+      <Block variant="form" className="flex items-center">
+        <Label htmlFor="title" className="inline-block">ステータス：</Label>
         {isEdit ? (
           <Select value={status.toString()} onValueChange={setStatus}>
             <SelectTrigger className="w-[180px]">
@@ -162,21 +162,20 @@ const Todo = ({ userId, todo, id }: TodoProps) => {
           <Paragraph>{statusList[Number(status)]}</Paragraph>
         )}
       </Block>
-      <Block margin="lg">
+      </div>
+      <Block margin="lg" className="flex justify-between">
         {isEdit ? (
-          <>
+          <div>
             <Button onClick={handleSet}>
               保存
             </Button>
             <Button variant="link" onClick={handleCancel}>
               キャンセル
             </Button>
-          </>
+          </div>
           ) : (
             <Button onClick={handleEdit}>編集</Button>
           )}
-      </Block>
-      <Block className="flex justify-between">
           <Button variant="outline" onClick={handleDelete} className="hover:bg-[#ef4444] hover:text-white">
             削除
           </Button>
