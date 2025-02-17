@@ -23,12 +23,8 @@ const TodoDetail = async ({ params }: { params: Promise<{ id: string }> }) => {
     <div>
       <Heading level={1}>TODO詳細</Heading>
       <Todo userId={user.id} todo={todo} id={id} />
-      <Block>
-        <BackButton link="/todos">一覧へ戻る</BackButton>
-      </Block>
     </div>
-
-  )
+  );
 };
 
 export default TodoDetail;
