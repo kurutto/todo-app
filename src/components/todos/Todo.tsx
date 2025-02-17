@@ -139,7 +139,7 @@ const Todo = ({ userId, todo, id }: TodoProps) => {
           )}
         </Block>
         <Block variant="form" className="flex items-center">
-          <Label htmlFor="title" className="inline-block">
+          <Label>
             ステータス：
           </Label>
           {isEdit ? (
@@ -147,7 +147,7 @@ const Todo = ({ userId, todo, id }: TodoProps) => {
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder={statusList[todo.status]} />
               </SelectTrigger>
-              <SelectContent id="content">
+              <SelectContent>
                 {statusList.map((status, idx) => (
                   <SelectItem key={idx} value={idx.toString()}>
                     {status}
