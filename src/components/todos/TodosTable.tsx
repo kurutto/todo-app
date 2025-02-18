@@ -55,8 +55,8 @@ const TodosTable = ({ todoList, handleSetTodoList, referrer }: TodosTableProps) 
         <TableHeader>
           <TableRow>
             <TableHead>Title</TableHead>
-            <TableHead className="w-14 text-center">Status</TableHead>
-            <TableHead className="w-20 text-center">
+            <TableHead className="text-center sm:w-20 max-sm:w-14">Status</TableHead>
+            <TableHead className="text-center sm:w-28 max-sm:w-20 ">
               Date
               <br />
               <span
@@ -72,7 +72,7 @@ const TodosTable = ({ todoList, handleSetTodoList, referrer }: TodosTableProps) 
                 &darr;
               </span>
             </TableHead>
-            <TableHead className="w-20 text-center max-sm:w-14">&nbsp;</TableHead>
+            <TableHead className="text-center sm:w-20 max-sm:w-14">&nbsp;</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

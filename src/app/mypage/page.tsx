@@ -19,7 +19,7 @@ const Mypage = async () => {
     <div>
       <Heading level={1}>ユーザー情報</Heading>
       <UserData user={user} />
-      <Heading level={2} className="mb-0">TODO</Heading>
+      <Heading level={2} className="sm:mb-0 max-sm:-mb-3">TODO</Heading>
       <UserTodos todos={todos} />
       
     </div>
