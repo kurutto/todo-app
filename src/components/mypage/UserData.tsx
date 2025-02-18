@@ -120,10 +120,8 @@ const UserData = ({ user }: UserDataProps) => {
           )}
         </div>
       </div>
-      <div className="ml-36 mb-2">
-      {err.id && <Paragraph variant="error">{err.id}</Paragraph>}
-      {idAlert && <Paragraph variant="error">{idAlert}</Paragraph>}
-      </div>
+      {err.id && <Paragraph variant="error" className="ml-36 mb-2">{err.id}</Paragraph>}
+      {idAlert && <Paragraph variant="error" className="ml-36 mb-2">{idAlert}</Paragraph>}
       <div className="flex items-center">
         <Heading level={3} className="w-36">
           ユーザー名
