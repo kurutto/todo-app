@@ -36,6 +36,12 @@ const Todo = ({ todo }: TodoProps) => {
         method: "DELETE",
       }
     );
+    if(referrer && referrer === 'mypage'){
+      router.push("/mypage");
+    }else{
+      router.push("/todos");
+    }
+    
     router.push("/todos");
     router.refresh();
   };
