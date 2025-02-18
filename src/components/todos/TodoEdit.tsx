@@ -112,7 +112,7 @@ const TodoEdit = () => {
             </SelectContent>
           </Select>
         </Block>
-        <Block margin="lg">
+        <Block margin="lg" className="max-sm:text-center">
           <Button type="submit" className="mr-2">
             保存
           </Button>

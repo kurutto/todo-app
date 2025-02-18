@@ -10,7 +10,6 @@ import { Button } from "../ui/button";
 const Header = async () => {
   const session = await getServerSession(nextAuthOptions);
   const user = session?.user as UserType;
-  console.log(user);
   return (
     <div className="flex items-center px-6 py-5 justify-end text-sm">
       {!user ? (

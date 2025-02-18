@@ -53,7 +53,7 @@ const Todo = ({ todo }: TodoProps) => {
       <Paragraph>{todo.content}</Paragraph>
       <Heading level={3}>ステータス</Heading>
       <Paragraph>{statusList[todo.status]}</Paragraph>
-      <Block margin="lg">
+      <Block margin="lg" className="max-sm:text-center">
         <Button onClick={handleEdit} className="mr-2">編集</Button>
         <Button
           variant="outline"
