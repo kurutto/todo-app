@@ -7,11 +7,11 @@ export interface UserType{
   lastLogin ?: Date
 }
 export interface TodoType{
-  id:number
+  id:string
   title ?: string
   content ?: string
   status : number
-  createdAt:Date
+  createdAt?:Date
   userId : string
 }
 export interface AccountType{

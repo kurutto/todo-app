@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 interface BackButtonProps {
   children: ReactNode;
-  link:string;
+  link: string;
   className?: string;
 }
 
