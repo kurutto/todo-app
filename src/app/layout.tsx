@@ -18,7 +18,7 @@ export default function RootLayout({
       <body>
         <Header />
         <NextAuthProvider>
-          <div className="w-5/6 mx-auto mt-12 mb-5">{children}</div>
+          <div className="mx-auto sm:w-5/6 sm:mt-20 sm:mb-20 max-sm:w-11/12 max-sm:mt-14 max-sm:mb-20">{children}</div>
         </NextAuthProvider>
       </body>
     </html>

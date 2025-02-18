@@ -40,7 +40,7 @@ const TodosStatusFilter = ({todos,handleSetTodoList}:TodosStatusFilterProps) => 
       <CardHeader>
         <CardTitle>ステータスを選択</CardTitle>
       </CardHeader>
-      <CardContent className="md:flex md:justify-between max-md:grid gap-5">
+      <CardContent className="sm:flex sm:justify-between max-sm:grid gap-5">
         <div className="grid w-full items-center gap-4">
           <ul className="flex gap-5">
             {statusList.map((item, idx) => (
@@ -61,7 +61,7 @@ const TodosStatusFilter = ({todos,handleSetTodoList}:TodosStatusFilterProps) => 
             ))}
           </ul>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 max-sm:justify-end">
           <Button variant='secondary' onClick={handleFilter}>実行</Button>
           <Button variant="secondary" onClick={handleFilterReset}>リセット</Button>
         </div>

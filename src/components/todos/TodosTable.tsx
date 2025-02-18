@@ -54,10 +54,10 @@ const TodosTable = ({ todoList, handleSetTodoList, referrer }: TodosTableProps) 
       <Table className="mt-10">
         <TableHeader>
           <TableRow>
-            <TableHead>タイトル</TableHead>
-            <TableHead className="w-24 text-center">ステータス</TableHead>
-            <TableHead className="w-28 text-center">
-              作成日
+            <TableHead>Title</TableHead>
+            <TableHead className="w-14 text-center">Status</TableHead>
+            <TableHead className="w-20 text-center">
+              Date
               <br />
               <span
                 onClick={handleSortAscending}
@@ -72,7 +72,7 @@ const TodosTable = ({ todoList, handleSetTodoList, referrer }: TodosTableProps) 
                 &darr;
               </span>
             </TableHead>
-            <TableHead className="w-24 text-center">&nbsp;</TableHead>
+            <TableHead className="w-20 text-center">&nbsp;</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
