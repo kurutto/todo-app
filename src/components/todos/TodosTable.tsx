@@ -12,18 +12,22 @@ import { TodoType } from "@/types/types";
 import { statusList } from "@/data/todos/status";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { referrerAtom } from "@/store/atoms";
+import { useAtom } from "jotai";
 
 interface TodosTableProps {
   todoList: TodoType[];
-  handleSetTodoList:(data:TodoType[]) => void;
+  handleSetTodoList: (data: TodoType[]) => void;
+  referrer:string
 }
-const TodosTable = ({ todoList, handleSetTodoList }: TodosTableProps) => {
+const TodosTable = ({ todoList, handleSetTodoList, referrer }: TodosTableProps) => {
+  const [, setReferrer] = useAtom(referrerAtom);
   const handleSortAscending = () => {
     const newList = [...todoList];
     newList.sort((first, second) => {
-      if (first.createdAt > second.createdAt) {
+      if (first.createdAt! > second.createdAt!) {
         return -1;
-      } else if (second.createdAt > first.createdAt) {
+      } else if (second.createdAt! > first.createdAt!) {
         return 1;
       } else {
         return 0;
@@ -34,9 +38,9 @@ const TodosTable = ({ todoList, handleSetTodoList }: TodosTableProps) => {
   const handleSortDescending = () => {
     const newList = [...todoList];
     newList.sort((first, second) => {
-      if (first.createdAt < second.createdAt) {
+      if (first.createdAt! < second.createdAt!) {
         return -1;
-      } else if (second.createdAt < first.createdAt) {
+      } else if (second.createdAt! < first.createdAt!) {
         return 1;
       } else {
         return 0;
@@ -79,11 +83,11 @@ const TodosTable = ({ todoList, handleSetTodoList }: TodosTableProps) => {
                 {statusList[todo.status]}
               </TableCell>
               <TableCell className="text-center">
-                {new Date(todo.createdAt).toLocaleDateString()}
+                {new Date(todo.createdAt!).toLocaleDateString()}
               </TableCell>
               <TableCell className="text-center">
                 <Button asChild>
-                  <Link href={`/todos/${todo.id}`}>詳細</Link>
+                  <Link href={`/todos/${todo.id}`} onClick={() => setReferrer(referrer)}>詳細</Link>
                 </Button>
               </TableCell>
             </TableRow>

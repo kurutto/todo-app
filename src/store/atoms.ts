@@ -4,3 +4,4 @@ import { atom } from 'jotai'
 export const todoAtom = atom<TodoType>({
   id:'', title:'', content:'', status:0, userId:''
 });
+export const referrerAtom = atom<string>('');

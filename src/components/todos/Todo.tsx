@@ -7,14 +7,16 @@ import { Button } from "@/components/ui/button";
 import Paragraph from "../ui/paragraph";
 import Heading from "../ui/heading";
 import { useAtom } from "jotai";
-import { todoAtom } from "@/store/atoms";
+import { referrerAtom, todoAtom } from "@/store/atoms";
 import Block from "../ui/block";
+import BackButton from "../ui/backButton";
 
 interface TodoProps {
   todo: TodoType;
 }
 const Todo = ({ todo }: TodoProps) => {
   const router = useRouter();
+  const [referrer] = useAtom(referrerAtom);
   const [, setStoreTodo] = useAtom(todoAtom);
 
   const handleEdit = () => {
@@ -55,6 +57,8 @@ const Todo = ({ todo }: TodoProps) => {
           削除
         </Button>
       </Block>
+      {referrer && referrer === 'mypage' && <Block><BackButton link="/mypage">マイページへ戻る</BackButton></Block>}
+      {referrer && referrer === 'todos' && <Block><BackButton link="/todos">TODO一覧へ戻る</BackButton></Block>}
     </div>
   );
 };

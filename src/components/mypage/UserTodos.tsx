@@ -15,7 +15,7 @@ const UserTodos = ({ todos }: TodoListProps) => {
   return (
     <div>
       {todos ? (
-        <TodosTable todoList={todoList} handleSetTodoList={handleSetTodoList} />
+        <TodosTable todoList={todoList} handleSetTodoList={handleSetTodoList} referrer={'mypage'} />
       ) : null}
     </div>
   );

@@ -19,7 +19,7 @@ const Todos = ({ todos }: TodoListProps) => {
         <TodosStatusFilter handleSetTodoList={handleSetTodoList} todos={todos} />
         <TodosTextFilter handleSetTodoList={handleSetTodoList} todos={todos} />
       </div>
-      <TodosTable todoList={todoList} handleSetTodoList={handleSetTodoList} />
+      <TodosTable todoList={todoList} handleSetTodoList={handleSetTodoList} referrer='todos' />
     </div>
   )
 }
