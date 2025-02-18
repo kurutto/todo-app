@@ -18,7 +18,7 @@ const page = async () => {
       <Heading level={1}>TODO一覧</Heading>
       <Todos todos={todos} />
       <Block margin="lg" className="text-center">
-      <Button asChild variant="outline"><Link href="/todos/create">新規作成</Link></Button>
+        <Button asChild variant="secondary"><Link href="/todos/create">新規作成</Link></Button>
       </Block>
     </div>
   );
