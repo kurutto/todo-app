@@ -17,7 +17,7 @@ const page = async () => {
     <div>
       <div className="relative">
         <Heading level={1}>TODO一覧</Heading>
-        <div className="sm:absolute sm:top-0 sm:right-0 max-sm:text-right max-sm:-mt-6 max-sm:mb-6"><Button asChild variant="secondary"><Link href="/todos/create">TODO作成</Link></Button></div>
+        <div className="sm:absolute sm:top-0 sm:right-0 max-sm:text-right max-sm:-mt-3 max-sm:mb-3"><Button asChild><Link href="/todos/create">TODO作成</Link></Button></div>
       </div>
       <Todos todos={todos} />
     </div>

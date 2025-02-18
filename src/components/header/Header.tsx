@@ -11,22 +11,22 @@ const Header = async () => {
   const session = await getServerSession(nextAuthOptions);
   const user = session?.user as UserType;
   return (
-    <div className="flex items-center px-6 py-5 justify-end text-sm">
+    <div className="flex items-center sm:px-6 sm:py-5 justify-end text-sm max-sm:px-3 max-sm:py-3">
       {!user ? (
         <>
-          <Button variant="link" className="px-2">
+          <Button variant="ghost" className="sm:px-4 max-sm:px-3 text-[#737373]">
             <Link href="/signup">サインアップ</Link>
           </Button>
-          <Button variant="link" className="px-2">
-            <Link href="/signin">ログイン"</Link>
+          <Button variant="ghost" className="sm:px-4 max-sm:px-3 text-[#737373]">
+            <Link href="/signin">ログイン</Link>
           </Button>
         </>
       ):(
         <>
-          <Button variant="link" className="sm:px-5 max-sm:px-3">
+          <Button variant="ghost" className="sm:px-4 max-sm:px-3 text-[#737373]">
             <Link href="/todos">TODO一覧</Link>
           </Button>
-          <Button variant="link" className="sm:px-5 max-sm:px-3">
+          <Button variant="ghost" className="sm:px-4 max-sm:px-3 text-[#737373]">
             <Link href="/api/auth/signout">ログアウト</Link>
           </Button>
           <Link href="/mypage" className="sm:ml-3 max-sm:ml-1">

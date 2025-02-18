@@ -72,7 +72,7 @@ const TodosTable = ({ todoList, handleSetTodoList, referrer }: TodosTableProps) 
                 &darr;
               </span>
             </TableHead>
-            <TableHead className="w-20 text-center">&nbsp;</TableHead>
+            <TableHead className="w-20 text-center max-sm:w-14">&nbsp;</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -86,7 +86,7 @@ const TodosTable = ({ todoList, handleSetTodoList, referrer }: TodosTableProps) 
                 {new Date(todo.createdAt!).toLocaleDateString()}
               </TableCell>
               <TableCell className="text-center">
-                <Button asChild>
+                <Button asChild className="max-sm:p-2 max-sm:text-xs max-sm:leading-none max-sm:h-auto">
                   <Link href={`/todos/${todo.id}`} onClick={() => setReferrer(referrer)}>詳細</Link>
                 </Button>
               </TableCell>

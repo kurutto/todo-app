@@ -15,7 +15,7 @@ const Todos = ({ todos }: TodoListProps) => {
   }
   return (
     <div>
-      <div className="grid gap-5 lg:grid-cols-2">
+      <div className="grid sm:gap-5 lg:grid-cols-2 max-sm:gap-3">
         <TodosStatusFilter handleSetTodoList={handleSetTodoList} todos={todos} />
         <TodosTextFilter handleSetTodoList={handleSetTodoList} todos={todos} />
       </div>
