@@ -61,9 +61,9 @@ const TodosStatusFilter = ({todos,handleSetTodoList}:TodosStatusFilterProps) => 
             ))}
           </ul>
         </div>
-        <div className="flex gap-2 max-sm:justify-end">
+        <div className="flex gap-2 max-sm:justify-between">
           <Button variant='secondary' onClick={handleFilter}>実行</Button>
-          <Button variant="secondary" onClick={handleFilterReset}>リセット</Button>
+          <Button variant="outline" onClick={handleFilterReset}>リセット</Button>
         </div>
       </CardContent>
     </Card>

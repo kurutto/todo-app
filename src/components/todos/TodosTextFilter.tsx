@@ -37,9 +37,9 @@ const TodosTextFilter = ({todos,handleSetTodoList}:TodosTextFilterProps) => {
       </CardHeader>
       <CardContent className="sm:flex sm:justify-between max-sm:grid gap-5">
         <Input type="text" ref={filterTextRef} />
-        <div className="flex gap-2 max-sm:justify-end">
+        <div className="flex gap-2 max-sm:justify-between">
           <Button variant='secondary' onClick={handleTextFilter}>実行</Button>
-          <Button variant="secondary" onClick={handleTextFilterReset}>リセット</Button>
+          <Button variant="outline" onClick={handleTextFilterReset}>リセット</Button>
         </div>
       </CardContent>
     </Card>
