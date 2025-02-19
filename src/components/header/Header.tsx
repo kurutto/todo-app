@@ -14,19 +14,19 @@ const Header = async () => {
     <div className="flex items-center sm:px-6 sm:py-5 justify-end text-sm max-sm:px-3 max-sm:py-3">
       {!user ? (
         <>
-          <Button variant="ghost" className="sm:px-4 max-sm:px-3 text-[#737373]">
+          <Button variant="ghost" className="sm:px-4 max-sm:px-3 text-[#737373] hover:bg-transparent">
             <Link href="/signup">サインアップ</Link>
           </Button>
-          <Button variant="ghost" className="sm:px-4 max-sm:px-3 text-[#737373]">
+          <Button variant="ghost" className="sm:px-4 max-sm:px-3 text-[#737373] hover:bg-transparent">
             <Link href="/signin">ログイン</Link>
           </Button>
         </>
       ):(
         <>
-          <Button variant="ghost" className="sm:px-4 max-sm:px-3 text-[#737373]">
+          <Button variant="ghost" className="sm:px-4 max-sm:px-3 text-[#737373] hover:bg-transparent rounded-none">
             <Link href="/todos">TODO一覧</Link>
           </Button>
-          <Button variant="ghost" className="sm:px-4 max-sm:px-3 text-[#737373]">
+          <Button variant="ghost" className="sm:px-4 max-sm:px-3 text-[#737373] hover:bg-transparent">
             <Link href="/api/auth/signout">ログアウト</Link>
           </Button>
           <Link href="/mypage" className="sm:ml-3 max-sm:ml-1">
