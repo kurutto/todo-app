@@ -4,6 +4,7 @@ import Header from "@/components/header/Header";
 import { NextAuthProvider } from "@/lib/next-auth/provider";
 import { Suspense } from "react";
 import LoadingSpinner from "./loading";
+import Footer from "@/components/footer/Footer";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -24,6 +25,7 @@ export default function RootLayout({
             <div className="relative flex-1 mx-auto sm:w-5/6 sm:mt-20 sm:mb-20 max-sm:w-11/12 max-sm:mt-14 max-sm:mb-20">{children}</div>
           </NextAuthProvider>
         </Suspense>
+        <Footer />
       </body>
     </html>
   );
