@@ -6,6 +6,7 @@ import { nextAuthOptions } from "@/lib/next-auth/route";
 import Image from "next/image";
 import { FaUserCircle } from "react-icons/fa";
 import { Button } from "../ui/button";
+import NavButton from "../ui/navButton";
 
 const Header = async () => {
   const session = await getServerSession(nextAuthOptions);
@@ -14,21 +15,13 @@ const Header = async () => {
     <div className="flex items-center sm:px-6 sm:py-5 justify-end text-sm max-sm:px-3 max-sm:py-3">
       {!user ? (
         <>
-          <Button variant="ghost" className="sm:px-4 max-sm:px-3 text-[#737373] hover:bg-transparent">
-            <Link href="/signup">サインアップ</Link>
-          </Button>
-          <Button variant="ghost" className="sm:px-4 max-sm:px-3 text-[#737373] hover:bg-transparent">
-            <Link href="/signin">ログイン</Link>
-          </Button>
+          <NavButton link="/signup">サインアップ</NavButton>
+          <NavButton link="/signin">ログイン</NavButton>
         </>
       ):(
         <>
-          <Button variant="ghost" className="sm:px-4 max-sm:px-3 text-[#737373] hover:bg-transparent rounded-none">
-            <Link href="/todos">TODO一覧</Link>
-          </Button>
-          <Button variant="ghost" className="sm:px-4 max-sm:px-3 text-[#737373] hover:bg-transparent">
-            <Link href="/api/auth/signout">ログアウト</Link>
-          </Button>
+          <NavButton link="/todos">TODO一覧</NavButton>
+          <NavButton link="/api/auth/signout">ログアウト</NavButton>
           <Link href="/mypage" className="sm:ml-3 max-sm:ml-1">
             {user.image ? (
               <Image
