@@ -1,8 +1,8 @@
-'use client'
+import Heading from "@/components/ui/heading"
 
 const NotFound = () => {
   return (
-    <div>404 Not Found</div>
+    <Heading level={2}>404 Not Found</Heading>
   )
 }
 
