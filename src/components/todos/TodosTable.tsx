@@ -54,7 +54,7 @@ const TodosTable = ({ todoList, handleSetTodoList, referrer }: TodosTableProps) 
       <Table className="mt-10">
         <TableHeader>
           <TableRow>
-            <TableHead className="text-center sm:w-20 max-sm:w-14">&nbsp;</TableHead>
+            <TableHead className="text-center sm:w-16 max-sm:w-12">&nbsp;</TableHead>
             <TableHead>Title</TableHead>
             <TableHead className="text-center sm:w-20 max-sm:w-14">Status</TableHead>
             <TableHead className="text-center sm:w-28 max-sm:w-20 ">
@@ -78,8 +78,8 @@ const TodosTable = ({ todoList, handleSetTodoList, referrer }: TodosTableProps) 
         <TableBody>
           {todoList.map((todo: TodoType) => (
             <TableRow key={todo.id}>
-            <TableCell className="text-center">
-              <Button asChild className="h-auto leading-none sm:px-3 sm:py-2 sm:my-[.1rem] max-sm:p-2 max-sm:text-xs">
+            <TableCell className="text-center pl-0">
+              <Button asChild className="h-auto leading-none sm:px-3 sm:py-2 my-[.1rem] max-sm:px-2 max-sm:py-[0.35rem] max-sm:text-xs">
                 <Link href={`/todos/${todo.id}`} onClick={() => setReferrer(referrer)}>詳細</Link>
               </Button>
             </TableCell>
