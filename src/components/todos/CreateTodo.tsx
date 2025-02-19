@@ -7,8 +7,8 @@ import { Label } from "@radix-ui/react-label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "../ui/textarea";
-import Paragraph from "../ui/paragraph";
-import Block from "../ui/block";
+import { Paragraph } from "../ui/paragraph";
+import { Block } from "../ui/block";
 import {
   Select,
   SelectContent,
@@ -96,4 +96,4 @@ const CreateTodo = ({ userId }: CreateTodoProps) => {
   );
 };
 
-export default CreateTodo;
+export { CreateTodo };

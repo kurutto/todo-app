@@ -1,5 +1,5 @@
 "use client";
-import Heading from "@/components/ui/heading";
+import { Heading } from "@/components/ui/heading";
 
 //サーバーコンポーネントでエラーが発生した場合に自動的に表示
 const Error = () => {

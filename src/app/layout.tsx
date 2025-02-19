@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Header from "@/components/header/Header";
+import { Header } from "@/components/header/header";
 import { NextAuthProvider } from "@/lib/next-auth/provider";
 import { Suspense } from "react";
 import LoadingSpinner from "./loading";
-import Footer from "@/components/footer/Footer";
+import { Footer } from "@/components/footer/footer";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -22,7 +22,9 @@ export default function RootLayout({
         <Header />
         <Suspense fallback={<LoadingSpinner />}>
           <NextAuthProvider>
-            <div className="relative flex-1 mx-auto sm:w-5/6 sm:mt-20 sm:mb-20 max-sm:w-11/12 max-sm:mt-14 max-sm:mb-20">{children}</div>
+            <div className="relative flex-1 mx-auto sm:w-5/6 sm:mt-20 sm:mb-20 max-sm:w-11/12 max-sm:mt-16 max-sm:mb-20">
+              {children}
+            </div>
           </NextAuthProvider>
         </Suspense>
         <Footer />

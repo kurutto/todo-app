@@ -1,7 +1,7 @@
 "use client";
 import { TodoType } from "@/types/types";
 import React, { useState } from "react";
-import TodosTable from "../todos/TodosTable";
+import {TodosTable} from "../todos/todosTable";
 
 interface TodoListProps {
   todos: TodoType[];
@@ -15,10 +15,14 @@ const UserTodos = ({ todos }: TodoListProps) => {
   return (
     <div>
       {todos ? (
-        <TodosTable todoList={todoList} handleSetTodoList={handleSetTodoList} referrer={'mypage'} />
+        <TodosTable
+          todoList={todoList}
+          handleSetTodoList={handleSetTodoList}
+          referrer={"mypage"}
+        />
       ) : null}
     </div>
   );
 };
 
-export default UserTodos;
+export { UserTodos };

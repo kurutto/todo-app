@@ -3,8 +3,8 @@ import React, { ReactNode } from "react";
 
 interface BlockProps
   extends Omit<React.ComponentPropsWithoutRef<"div">, "className"> {
-  margin ?: "sm" | "base" | "lg";
-  variant ?: "form";
+  margin?: "sm" | "base" | "lg";
+  variant?: "form";
   children: ReactNode;
   className?: string;
 }
@@ -20,7 +20,7 @@ const Block = ({
     margin === "sm" && "mt-3",
     margin === "base" && "mt-6",
     margin === "lg" && "mt-10",
-    variant === 'form' && "grid gap-1"
+    variant === "form" && "grid gap-1"
   );
   return (
     <div className={cn(baseStyle, className)} {...props}>
@@ -29,4 +29,4 @@ const Block = ({
   );
 };
 
-export default Block;
+export { Block };

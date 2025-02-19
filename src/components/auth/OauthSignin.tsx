@@ -17,4 +17,4 @@ const OauthSignin = () => {
   );
 };
 
-export default OauthSignin;
+export { OauthSignin };

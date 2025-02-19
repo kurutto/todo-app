@@ -2,10 +2,10 @@
 import { useSession } from "next-auth/react";
 import { UserType } from "@/types/types";
 import React, { useState } from "react";
-import Heading from "../ui/heading";
+import { Heading } from "../ui/heading";
 import { Button } from "../ui/button";
-import Paragraph from "../ui/paragraph";
-import Block from "../ui/block";
+import { Paragraph } from "../ui/paragraph";
+import { Block } from "../ui/block";
 import { Input } from "../ui/input";
 import { z } from "zod";
 
@@ -47,6 +47,7 @@ const UserData = ({ user }: UserDataProps) => {
   const handleEdit = () => {
     setIsEdit(true);
     setPreData([inputId, inputName]);
+    setResponseMessage("");
   };
   const handleSet = async () => {
     const result = formSchema.safeParse({
@@ -76,20 +77,20 @@ const UserData = ({ user }: UserDataProps) => {
           },
         });
         const data = await res.json();
-        if(!res.ok){
+        if (!res.ok) {
           if (data.errorId === "INVALID_ID") {
             setIDAlert(data.message);
-          }else {
+          } else {
             setErrorMessage("変更に失敗しました");
           }
         }
-        if(res.ok){
+        if (res.ok) {
           setIsEdit(false);
           setResponseMessage(data.message);
           await update({ id: inputId, name: inputName });
         }
       } catch (err) {
-          setErrorMessage("サーバーエラーが発生しました");
+        setErrorMessage("サーバーエラーが発生しました");
       }
     }
   };
@@ -98,12 +99,12 @@ const UserData = ({ user }: UserDataProps) => {
     setInputId(preData[0]!);
     setInputName(preData[1]);
     setErr({});
-    setIDAlert('');
+    setIDAlert("");
   };
   return (
     <div>
       <div className="flex items-center">
-        <Heading level={3} className="w-36">
+        <Heading level={4} className="sm:w-36 max-sm:w-32">
           ユーザーID
         </Heading>
         <div className="flex-1">
@@ -120,10 +121,18 @@ const UserData = ({ user }: UserDataProps) => {
           )}
         </div>
       </div>
-      {err.id && <Paragraph variant="error" className="ml-36 mb-2">{err.id}</Paragraph>}
-      {idAlert && <Paragraph variant="error" className="ml-36 mb-2">{idAlert}</Paragraph>}
+      {err.id && (
+        <Paragraph variant="error" className="ml-36 mb-2">
+          {err.id}
+        </Paragraph>
+      )}
+      {idAlert && (
+        <Paragraph variant="error" className="ml-36 mb-2">
+          {idAlert}
+        </Paragraph>
+      )}
       <div className="flex items-center">
-        <Heading level={3} className="w-36">
+        <Heading level={4} className="sm:w-36 max-sm:w-32">
           ユーザー名
         </Heading>
         <div className="flex-1">
@@ -140,7 +149,7 @@ const UserData = ({ user }: UserDataProps) => {
       </div>
       {err.name && <Paragraph variant="error">{err.name}</Paragraph>}
       <div className="flex items-center">
-        <Heading level={3} className="w-36">
+        <Heading level={4} className="sm:w-36 max-sm:w-32">
           最終ログイン日
         </Heading>
         <div>
@@ -163,10 +172,18 @@ const UserData = ({ user }: UserDataProps) => {
           </Button>
         )}
       </Block>
-      {responseMessage && <Block margin="sm"><Paragraph>{responseMessage}</Paragraph></Block>}
-      {errorMessage && <Block margin="sm"><Paragraph variant="error">{errorMessage}</Paragraph></Block>}
+      {responseMessage && (
+        <Block margin="sm">
+          <Paragraph>{responseMessage}</Paragraph>
+        </Block>
+      )}
+      {errorMessage && (
+        <Block margin="sm">
+          <Paragraph variant="error">{errorMessage}</Paragraph>
+        </Block>
+      )}
     </div>
   );
 };
 
-export default UserData;
+export { UserData };

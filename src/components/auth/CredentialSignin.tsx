@@ -5,8 +5,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import Paragraph from "../ui/paragraph";
-import Block from "../ui/block";
+import { Paragraph } from "../ui/paragraph";
+import { Block } from "../ui/block";
 import { Label } from "@radix-ui/react-label";
 
 const formSchema = z.object({
@@ -28,11 +28,11 @@ const CredentialSignin = () => {
     },
   });
   const onSubmit = async (values: formType) => {
-      await signIn("credentials", {
-        id: values.id,
-        password: values.password,
-        callbackUrl: "/todos",
-      });
+    await signIn("credentials", {
+      id: values.id,
+      password: values.password,
+      callbackUrl: "/todos",
+    });
   };
   return (
     <div>
@@ -62,4 +62,4 @@ const CredentialSignin = () => {
   );
 };
 
-export default CredentialSignin;
+export { CredentialSignin };

@@ -1,7 +1,7 @@
-import CreateTodo from "@/components/todos/CreateTodo";
-import BackButton from "@/components/ui/backButton";
-import Block from "@/components/ui/block";
-import Heading from "@/components/ui/heading";
+import { CreateTodo } from "@/components/todos/createTodo";
+import { BackButton } from "@/components/ui/backButton";
+import { Block } from "@/components/ui/block";
+import { Heading } from "@/components/ui/heading";
 import { nextAuthOptions } from "@/lib/next-auth/route";
 import { UserType } from "@/types/types";
 import { getServerSession } from "next-auth";

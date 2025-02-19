@@ -1,18 +1,16 @@
-import { TodoType } from '@/types/types';
-import React, { useRef } from 'react'
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Input } from '../ui/input';
-import { Button } from '../ui/button';
+import { TodoType } from "@/types/types";
+import React, { useRef } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 interface TodosTextFilterProps {
-  todos:TodoType[];
-  handleSetTodoList:(data:TodoType[]) => void;
+  todos: TodoType[];
+  handleSetTodoList: (data: TodoType[]) => void;
 }
-const TodosTextFilter = ({todos,handleSetTodoList}:TodosTextFilterProps) => {
+const TodosTextFilter = ({
+  todos,
+  handleSetTodoList,
+}: TodosTextFilterProps) => {
   const filterTextRef = useRef<HTMLInputElement>(null);
   const handleTextFilter = () => {
     if (filterTextRef.current!.value) {
@@ -38,12 +36,16 @@ const TodosTextFilter = ({todos,handleSetTodoList}:TodosTextFilterProps) => {
       <CardContent className="sm:flex sm:justify-between max-sm:grid gap-5">
         <Input type="text" ref={filterTextRef} />
         <div className="flex gap-2 max-sm:justify-between">
-          <Button variant='secondary' onClick={handleTextFilter}>実行</Button>
-          <Button variant="outline" onClick={handleTextFilterReset}>リセット</Button>
+          <Button variant="secondary" onClick={handleTextFilter}>
+            実行
+          </Button>
+          <Button variant="outline" onClick={handleTextFilterReset}>
+            リセット
+          </Button>
         </div>
       </CardContent>
     </Card>
-  )
-}
+  );
+};
 
-export default TodosTextFilter
+export { TodosTextFilter };

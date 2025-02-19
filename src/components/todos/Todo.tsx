@@ -4,12 +4,12 @@ import { TodoType } from "../../types/types";
 import { useRouter } from "next/navigation";
 import { statusList } from "../../data/todos/status";
 import { Button } from "@/components/ui/button";
-import Paragraph from "../ui/paragraph";
-import Heading from "../ui/heading";
+import { Paragraph } from "../ui/paragraph";
+import { Heading } from "../ui/heading";
 import { useAtom } from "jotai";
 import { referrerAtom, todoAtom } from "@/store/atoms";
-import Block from "../ui/block";
-import BackButton from "../ui/backButton";
+import { Block } from "../ui/block";
+import { BackButton } from "../ui/backButton";
 
 interface TodoProps {
   todo: TodoType;
@@ -36,12 +36,12 @@ const Todo = ({ todo }: TodoProps) => {
         method: "DELETE",
       }
     );
-    if(referrer && referrer === 'mypage'){
+    if (referrer && referrer === "mypage") {
       router.push("/mypage");
-    }else{
+    } else {
       router.push("/todos");
     }
-    
+
     router.push("/todos");
     router.refresh();
   };
@@ -50,11 +50,13 @@ const Todo = ({ todo }: TodoProps) => {
       <Heading level={3}>タイトル</Heading>
       <Paragraph>{todo.title}</Paragraph>
       <Heading level={3}>内容</Heading>
-      <Paragraph>{todo.content ? todo.content : '　'}</Paragraph>
+      <Paragraph>{todo.content ? todo.content : "　"}</Paragraph>
       <Heading level={3}>ステータス</Heading>
       <Paragraph>{statusList[todo.status]}</Paragraph>
       <Block margin="lg" className="max-sm:text-center">
-        <Button onClick={handleEdit} className="mr-2">編集</Button>
+        <Button onClick={handleEdit} className="mr-2">
+          編集
+        </Button>
         <Button
           variant="outline"
           onClick={handleDelete}
@@ -63,10 +65,18 @@ const Todo = ({ todo }: TodoProps) => {
           削除
         </Button>
       </Block>
-      {referrer && referrer === 'mypage' && <Block><BackButton link="/mypage">マイページへ戻る</BackButton></Block>}
-      {referrer && referrer === 'todos' && <Block><BackButton link="/todos">TODO一覧へ戻る</BackButton></Block>}
+      {referrer && referrer === "mypage" && (
+        <Block>
+          <BackButton link="/mypage">マイページへ戻る</BackButton>
+        </Block>
+      )}
+      {referrer && referrer === "todos" && (
+        <Block>
+          <BackButton link="/todos">TODO一覧へ戻る</BackButton>
+        </Block>
+      )}
     </div>
   );
 };
 
-export default Todo;
+export { Todo };

@@ -142,4 +142,4 @@ const CredentialSignup = () => {
   );
 };
 
-export default CredentialSignup;
+export { CredentialSignup };

@@ -6,8 +6,8 @@ import { statusList } from "../../data/todos/status";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import Paragraph from "../ui/paragraph";
-import Block from "../ui/block";
+import { Paragraph } from "../ui/paragraph";
+import { Block } from "../ui/block";
 import { Label } from "@radix-ui/react-label";
 import {
   Select,
@@ -21,7 +21,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAtom } from "jotai";
 import { todoAtom } from "@/store/atoms";
-import BackButton from "../ui/backButton";
+import { BackButton } from "../ui/backButton";
 import Link from "next/link";
 
 const formSchema = z.object({
@@ -132,4 +132,4 @@ const TodoEdit = () => {
   );
 };
 
-export default TodoEdit;
+export { TodoEdit };
