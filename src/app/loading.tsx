@@ -6,7 +6,7 @@ import { ClipLoader } from "react-spinners";
 const LoadingSpinner = () => {
   // スピナーのサイズや色をカスタマイズできます
   const size = 50;
-  const color = "#1266d5";
+  const color = "hsl(var(--primary))";
 
   return (
     <div className="h-screen flex justify-center items-center sm:-mt-[156px] max-sm:-mt-[116px]">
