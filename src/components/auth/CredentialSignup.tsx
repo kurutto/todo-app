@@ -6,8 +6,8 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import Paragraph from "../ui/paragraph";
-import Block from "../ui/block";
+import { Paragraph } from "../ui/paragraph";
+import { Block } from "../ui/block";
 
 const formSchema = z.object({
   id: z
