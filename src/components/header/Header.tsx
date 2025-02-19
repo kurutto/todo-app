@@ -5,23 +5,28 @@ import { UserType } from "@/types/types";
 import { nextAuthOptions } from "@/lib/next-auth/route";
 import Image from "next/image";
 import { FaUserCircle } from "react-icons/fa";
-import { Button } from "../ui/button";
-import NavButton from "../ui/navButton";
+import { NavButton } from "./navButton";
+import { NavIcon } from "./navIcon";
+import { MobileMenu } from "./mobileMenu";
 
 const Header = async () => {
   const session = await getServerSession(nextAuthOptions);
   const user = session?.user as UserType;
   return (
-    <div className="flex items-center sm:px-6 sm:py-5 justify-end text-sm max-sm:px-3 max-sm:py-3">
+    <div className="flex items-center sm:px-6 sm:py-5 justify-end text-sm max-sm:w-11/12 max-sm:mx-auto max-sm:py-3">
       {!user ? (
         <>
           <NavButton link="/signup">サインアップ</NavButton>
           <NavButton link="/signin">ログイン</NavButton>
         </>
-      ):(
+      ) : (
         <>
-          <NavButton link="/todos">TODO一覧</NavButton>
-          <NavButton link="/api/auth/signout">ログアウト</NavButton>
+          <NavButton link="/todos" className="max-sm:hidden">
+            TODO一覧
+          </NavButton>
+          <NavButton link="/api/auth/signout" className="max-sm:hidden">
+            ログアウト
+          </NavButton>
           <Link href="/mypage" className="sm:ml-3 max-sm:ml-1">
             {user.image ? (
               <Image
@@ -35,10 +40,11 @@ const Header = async () => {
               <FaUserCircle style={{ fontSize: "35px", color: "#1266d5" }} />
             )}
           </Link>
+          <MobileMenu />
         </>
       )}
     </div>
   );
 };
 
-export default Header;
+export { Header };
