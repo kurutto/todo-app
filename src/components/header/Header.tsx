@@ -24,6 +24,9 @@ const Header = async () => {
           <NavButton link="/todos" className="max-sm:hidden">
             TODO一覧
           </NavButton>
+          <NavButton link="/todos/create" className="max-sm:hidden">
+            TODO新規作成
+          </NavButton>
           <NavButton link="/api/auth/signout" className="max-sm:hidden">
             ログアウト
           </NavButton>
