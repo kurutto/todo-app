@@ -58,7 +58,7 @@ const Todo = ({ todo }: TodoProps) => {
         <Button
           variant="outline"
           onClick={handleDelete}
-          className="hover:bg-[#ef4444] hover:text-white"
+          className="hover:bg-[hsl(var(--destructive))] hover:border-transparent hover:text-white"
         >
           削除
         </Button>
