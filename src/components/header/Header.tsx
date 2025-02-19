@@ -35,6 +35,7 @@ const Header = async () => {
                 width="35"
                 height="35"
                 className="rounded-full"
+                priority
               />
             ) : (
               <FaUserCircle style={{ fontSize: "35px", color: "#1266d5" }} />
