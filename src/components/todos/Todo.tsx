@@ -50,7 +50,7 @@ const Todo = ({ todo }: TodoProps) => {
       <Heading level={3}>タイトル</Heading>
       <Paragraph>{todo.title}</Paragraph>
       <Heading level={3}>内容</Heading>
-      <Paragraph>{todo.content}</Paragraph>
+      <Paragraph>{todo.content ? todo.content : '　'}</Paragraph>
       <Heading level={3}>ステータス</Heading>
       <Paragraph>{statusList[todo.status]}</Paragraph>
       <Block margin="lg" className="max-sm:text-center">
