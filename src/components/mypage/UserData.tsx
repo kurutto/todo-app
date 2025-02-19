@@ -15,6 +15,7 @@ interface UserDataProps {
 const UserData = ({ user }: UserDataProps) => {
   const { update } = useSession();
   const [isEdit, setIsEdit] = useState(false);
+  const [previousId, setPreviousId] = useState(user.id);
   const [inputId, setInputId] = useState(user.id);
   const [inputName, setInputName] = useState(user.name);
   const [preData, setPreData] = useState([user.id, user.name]);
@@ -50,6 +51,7 @@ const UserData = ({ user }: UserDataProps) => {
     setResponseMessage("");
   };
   const handleSet = async () => {
+    setErr({});
     const result = formSchema.safeParse({
       id: inputId,
       name: inputName,
@@ -68,7 +70,7 @@ const UserData = ({ user }: UserDataProps) => {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user`, {
           method: "POST",
           body: JSON.stringify({
-            previousId: user.id,
+            previousId: previousId,
             newId: inputId,
             name: inputName,
           }),
@@ -81,13 +83,14 @@ const UserData = ({ user }: UserDataProps) => {
           if (data.errorId === "INVALID_ID") {
             setIDAlert(data.message);
           } else {
-            setErrorMessage("変更に失敗しました");
+            setErrorMessage(data.message);
           }
         }
         if (res.ok) {
           setIsEdit(false);
           setResponseMessage(data.message);
-          await update({ id: inputId, name: inputName });
+          setPreviousId(inputId);
+          update({ id: inputId, name: inputName });
         }
       } catch (err) {
         setErrorMessage("サーバーエラーが発生しました");
@@ -100,6 +103,7 @@ const UserData = ({ user }: UserDataProps) => {
     setInputName(preData[1]);
     setErr({});
     setIDAlert("");
+    setErrorMessage("");
   };
   return (
     <div>
