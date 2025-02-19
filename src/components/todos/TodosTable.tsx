@@ -54,6 +54,7 @@ const TodosTable = ({ todoList, handleSetTodoList, referrer }: TodosTableProps) 
       <Table className="mt-10">
         <TableHeader>
           <TableRow>
+            <TableHead className="text-center sm:w-20 max-sm:w-14">&nbsp;</TableHead>
             <TableHead>Title</TableHead>
             <TableHead className="text-center sm:w-20 max-sm:w-14">Status</TableHead>
             <TableHead className="text-center sm:w-28 max-sm:w-20 ">
@@ -72,23 +73,22 @@ const TodosTable = ({ todoList, handleSetTodoList, referrer }: TodosTableProps) 
                 &darr;
               </span>
             </TableHead>
-            <TableHead className="text-center sm:w-20 max-sm:w-14">&nbsp;</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {todoList.map((todo: TodoType) => (
             <TableRow key={todo.id}>
+            <TableCell className="text-center">
+              <Button asChild className=" max-sm:p-2 max-sm:text-xs max-sm:leading-none max-sm:h-auto">
+                <Link href={`/todos/${todo.id}`} onClick={() => setReferrer(referrer)}>詳細</Link>
+              </Button>
+            </TableCell>
               <TableCell>{todo.title}</TableCell>
               <TableCell className="text-center">
                 {statusList[todo.status]}
               </TableCell>
               <TableCell className="text-center">
                 {new Date(todo.createdAt!).toLocaleDateString()}
-              </TableCell>
-              <TableCell className="text-center">
-                <Button asChild className="max-sm:p-2 max-sm:text-xs max-sm:leading-none max-sm:h-auto">
-                  <Link href={`/todos/${todo.id}`} onClick={() => setReferrer(referrer)}>詳細</Link>
-                </Button>
               </TableCell>
             </TableRow>
           ))}
