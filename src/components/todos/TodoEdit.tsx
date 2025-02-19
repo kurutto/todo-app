@@ -22,6 +22,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useAtom } from "jotai";
 import { todoAtom } from "@/store/atoms";
 import BackButton from "../ui/backButton";
+import Link from "next/link";
 
 const formSchema = z.object({
   title: z.string().min(1, {
@@ -116,14 +117,17 @@ const TodoEdit = () => {
           <Button type="submit" className="mr-2">
             保存
           </Button>
+          <Button variant="outline" type="submit">
+            <Link href={`/todos/${storeTodo.id}`}>キャンセル</Link>
+          </Button>
         </Block>
       </form>
 
       <Block>
-          <BackButton link={`/todos/${storeTodo.id}`} className="-mb-6">
-            TODO詳細
-          </BackButton>
-        </Block>
+        <BackButton link={`/todos/${storeTodo.id}`} className="-mb-6">
+          TODO詳細
+        </BackButton>
+      </Block>
     </div>
   );
 };
